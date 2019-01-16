@@ -1,0 +1,129 @@
+#ifndef _KEYCODES_H_
+#define _KEYCODES_H_
+
+#include "Clip/Core/Core.h"
+
+#ifdef CL_PLATFORM_WINDOWS
+#include <Windows.h>
+#define CL_MSE_LBUTTON				0x02
+#define CL_MSE_RBUTTON				0x08
+#define CL_MSE_MBUTTON				0x04
+#define CL_MSE_BUTTON1				CL_MSE_LBUTTON
+#define CL_MSE_BUTTON2				CL_MSE_RBUTTON
+#define CL_MSE_BUTTON3				CL_MSE_MBUTTON
+#define CL_MSE_BUTTON4				0x10
+#define CL_MSE_BUTTON5				0x20
+#define CL_KEY_BACKSPACE			VK_BACK
+#define CL_KEY_TAB					VK_TAB
+#define CL_KEY_ENTER				VK_RETURN
+#define CL_KEY_SHIFT				VK_SHIFT
+#define CL_KEY_CTRL					VK_CONTROL
+#define CL_KEY_ALT					VK_MENU
+#define CL_KEY_PAUSE				VK_PAUSE
+#define CL_KEY_CAPSLOCK				VK_CAPITAL
+#define CL_KEY_ESC					VK_ESCAPE
+#define CL_KEY_SPACE				VK_SPACE
+#define CL_KEY_PAGEUP				VK_PRIOR
+#define CL_KEY_PAGEDOWN				VK_NEXT
+#define CL_KEY_END					VK_END
+#define CL_KEY_HOME					VK_HOME
+#define CL_KEY_LEFT					VK_LEFT
+#define CL_KEY_RIGHT				VK_RIGHT
+#define CL_KEY_UP					VK_UP
+#define CL_KEY_DOWN					VK_DOWN
+#define CL_KEY_PRINTSCREEN			VK_SNAPSHOT
+#define CL_KEY_INSERT				VK_INSERT
+#define CL_KEY_DELETE				VK_DELETE
+#define CL_KEY_0					0x30
+#define CL_KEY_1					0x31
+#define CL_KEY_2					0x32
+#define CL_KEY_3					0x33
+#define CL_KEY_4					0x34
+#define CL_KEY_5					0x35
+#define CL_KEY_6					0x36
+#define CL_KEY_7					0x37
+#define CL_KEY_8					0x38
+#define CL_KEY_9					0x39
+#define CL_KEY_A					0x41
+#define CL_KEY_B					0x42
+#define CL_KEY_C					0x43
+#define CL_KEY_D					0x44
+#define CL_KEY_E					0x45
+#define CL_KEY_F					0x46
+#define CL_KEY_G					0x47
+#define CL_KEY_H					0x48
+#define CL_KEY_I					0x49
+#define CL_KEY_J					0x4a
+#define CL_KEY_K					0x4b
+#define CL_KEY_L					0x4c
+#define CL_KEY_M					0x4d
+#define CL_KEY_N					0x4e
+#define CL_KEY_O					0x4f
+#define CL_KEY_P					0x50
+#define CL_KEY_Q					0x51
+#define CL_KEY_R					0x52
+#define	CL_KEY_S					0x53
+#define CL_KEY_T					0x54
+#define CL_KEY_U					0x55
+#define CL_KEY_V					0x56
+#define CL_KEY_W					0x57
+#define CL_KEY_X					0x58
+#define CL_KEY_Y					0x59
+#define CL_KEY_Z					0x5a
+#define CL_KEY_NUMPAD0				VK_NUMPAD0
+#define CL_KEY_NUMPAD1				VK_NUMPAD1
+#define CL_KEY_NUMPAD2				VK_NUMPAD2
+#define CL_KEY_NUMPAD3				VK_NUMPAD3
+#define CL_KEY_NUMPAD4				VK_NUMPAD4
+#define CL_KEY_NUMPAD5				VK_NUMPAD5
+#define CL_KEY_NUMPAD6				VK_NUMPAD6
+#define	CL_KEY_NUMPAD7				VK_NUMPAD7
+#define CL_KEY_NUMPAD8				VK_NUMPAD8
+#define CL_KEY_NUMPAD9				VK_NUMPAD9
+#define CL_KEY_MULTIPLY				VK_MULTIPLY
+#define CL_KEY_ADD					VK_ADD
+#define CL_KEY_SEPARATOR			VK_SEPARATOR
+#define CL_KEY_SUBTRACT				VK_SUBTRACT
+#define CL_KEY_DECIMAL				VK_DECIMAL
+#define CL_KEY_DIVIDE				VK_DIVIDE
+#define CL_KEY_F1					VK_F1
+#define CL_KEY_F2					VK_F2
+#define CL_KEY_F3					VK_F3
+#define CL_KEY_F4					VK_F4
+#define CL_KEY_F5					VK_F5
+#define CL_KEY_F6					VK_F6
+#define CL_KEY_F7					VK_F7
+#define CL_KEY_F8					VK_F8
+#define CL_KEY_F9					VK_F9
+#define CL_KEY_F10					VK_F10
+#define CL_KEY_F11					VK_F11
+#define CL_KEY_F12					VK_F12
+#define CL_KEY_F13					VK_F13
+#define CL_KEY_F14					VK_F14
+#define CL_KEY_F15					VK_F15
+#define CL_KEY_F16					VK_F16
+#define CL_KEY_F17					VK_F17
+#define CL_KEY_F18					VK_F18
+#define CL_KEY_F19					VK_F19
+#define CL_KEY_F20					VK_F20
+#define CL_KEY_F21					VK_F21
+#define CL_KEY_F22					VK_F22
+#define CL_KEY_F23					VK_F23
+#define CL_KEY_F24					VK_F24
+#define CL_KEY_NUMLOCK				VK_NUMLOCK
+#define CL_KEY_SEMICOLON			VK_OEM_1
+#define CL_KEY_PLUS					VK_OEM_PLUS
+#define CL_KEY_COMMA				VK_OEM_COMMA
+#define CL_KEY_MINUS				VK_OEM_MINUS
+#define CL_KEY_PERIOD				VK_OEM_PERIOD
+#define CL_KEY_SLASH				VK_OEM_2
+#define CL_KEY_TILDA				VK_OEM_3
+#define CL_KEY_OPENBRACKET			VK_OEM_4
+#define CL_KEY_BACKSLASH			VK_OEM_5
+#define CL_KEY_CLOSEBRACKET			VK_OEM_6
+#define CL_KEY_QUOTE				VK_OEM_7
+#elif defined( GE_PLATFORM_LINUX )
+
+#endif
+
+#endif
