@@ -1,50 +1,48 @@
-#ifndef _EVENT_H_
-#define _EVENT_H_
+#ifndef CLP_EVENT_H_
+#define CLP_EVENT_H_
 
 #include "Clip/Core/Core.h"
 
-typedef unsigned long long CLqword;
-
-typedef enum tagCLeventtype
+typedef enum tagCLPeventtype
 {
 	// no event
-	CL_EVENT_NONE = 0,
+	CLP_EVENT_NONE = 0,
 	// window/application events
-	CL_EVENT_WINDOW_CLOSE = 1,
-	CL_EVENT_WINDOW_RESIZE = 2,
-	CL_EVENT_WINDOW_FOCUS = 3,
-	CL_EVENT_WINDOW_LOST_FOCUS = 4,
-	CL_EVENT_WINDOW_MOVED = 5,
+	CLP_EVENT_WINDOW_CLOSE = 1,
+	CLP_EVENT_WINDOW_RESIZE = 2,
+	CLP_EVENT_WINDOW_FOCUS = 3,
+	CLP_EVENT_WINDOW_LOST_FOCUS = 4,
+	CLP_EVENT_WINDOW_MOVED = 5,
 	// keyboard events
-	CL_EVENT_KEY_PRESSED = 6,
-	CL_EVENT_KEY_RELEASED = 7,
+	CLP_EVENT_KEY_PRESSED = 6,
+	CLP_EVENT_KEY_RELEASED = 7,
 	// mouse events
-	CL_EVENT_MOUSE_MOVED = 8,
-	CL_EVENT_MOUSE_BUTTON_PRESSED = 9,
-	CL_EVENT_MOUSE_BUTTON_RELEASED = 10,
-	CL_EVENT_MOUSE_SCROLLED = 11,
+	CLP_EVENT_MOUSE_MOVED = 8,
+	CLP_EVENT_MOUSE_BUTTON_PRESSED = 9,
+	CLP_EVENT_MOUSE_BUTTON_RELEASED = 10,
+	CLP_EVENT_MOUSE_SCROLLED = 11,
 	// completer application events
-	CL_EVENT_APP_TICK = 12,
-	CL_EVENT_APP_UPDATE = 13,
-	CL_EVENT_APP_RENDER = 14
-} CLeventtype;
+	CLP_EVENT_APP_TICK = 12,
+	CLP_EVENT_APP_UPDATE = 13,
+	CLP_EVENT_APP_RENDER = 14
+} CLPeventtype;
 
-typedef enum tagCLeventcategory
+typedef enum tagCLPeventcategory
 {
-	CL_EVENT_CAT_NONE			= 0,
-	CL_EVENT_CAT_KEYBOARD		= CL_BIT( 0 ),
-	CL_EVENT_CAT_MOUSE			= CL_BIT( 1 ),
-	CL_EVENT_CAT_APPLICATION	= CL_BIT( 2 ),
-	CL_EVENT_CAT_INPUT			= CL_BIT( 3 )
-} CLeventcategory;
+	CLP_EVENT_CAT_NONE			= 0,
+	CLP_EVENT_CAT_KEYBOARD		= CLP_BIT( 0 ),
+	CLP_EVENT_CAT_MOUSE			= CLP_BIT( 1 ),
+	CLP_EVENT_CAT_APPLICATION	= CLP_BIT( 2 ),
+	CLP_EVENT_CAT_INPUT			= CLP_BIT( 3 )
+} CLPeventcategory;
 
-typedef struct CL_API _tagCLevent
+typedef struct CLP_API tagCLPevent
 {
-	CLeventtype type;
-	CLbyte catigory;
+	CLPeventtype type;
+	CLPbyte catigory;
 
-	CLdword arg0;
-	CLqword arg1;
-} _CLevent;
+	CLPdword arg0;
+	CLPqword arg1;
+} CLPevent;
 
 #endif

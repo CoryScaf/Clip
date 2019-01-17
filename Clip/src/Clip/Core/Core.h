@@ -1,38 +1,38 @@
-#ifndef _CORE_H_
-#define _CORE_H_
+#ifndef CLP_CORE_H_
+#define CLP_CORE_H_
 
-#ifdef CL_PLATFORM_WINDOWS
-#	ifdef CL_BUILD_DLL
-#		define CL_API __declspec( dllexport )
+#ifdef CLP_PLATFORM_WINDOWS
+#	ifdef CLP_BUILD_DLL
+#		define CLP_API __declspec( dllexport )
 #	else
-#		define CL_API __declspec( dllimport )
+#		define CLP_API __declspec( dllimport )
 #	endif
 #endif
 
-#if !defined( CL_API_OPENGL ) && !defined( CL_API_VULKAN ) && !defined( CL_API_DIRECTX )
-#	define CL_API_OPENGL
+#if !defined( CLP_API_OPENGL ) && !defined( CLP_API_VULKAN ) && !defined( CLP_API_DIRECTX )
+#	define CLP_API_OPENGL
 #endif
 
-#define CL_BIT( x ) 1 << x
+#define CLP_BIT( x ) 1 << x
 
-#define CL_TRUE 1
-#define CL_FALSE 0
+#define CLP_TRUE 1
+#define CLP_FALSE 0
 
-#define CL_NULL (void*)0
+#define CLP_NULL (void*)0
 
-typedef unsigned char CLbyte;
-typedef unsigned short CLword;
-typedef unsigned int CLdword;
-typedef unsigned long long int CLqword;
+typedef unsigned char CLPbyte;
+typedef unsigned short CLPword;
+typedef unsigned int CLPdword;
+typedef unsigned long long int CLPqword;
 
 
-CLdword CL_API clHighDWord( CLqword QWORD );
-CLdword CL_API clLowDWord( CLqword QWORD );
+CLPdword CLP_API clpHighDWord( CLPqword QWORD );
+CLPdword CLP_API clpLowDWord( CLPqword QWORD );
 
-CLword CL_API clHighWord( CLdword DWORD );
-CLword CL_API clLowWord( CLdword DWORD );
+CLPword CLP_API clpHighWord( CLPdword DWORD );
+CLPword CLP_API clpLowWord( CLPdword DWORD );
 
-CLbyte CL_API clHighByte( CLword WORD );
-CLbyte CL_API clLowByte( CLword WORD );
+CLPbyte CLP_API clpHighByte( CLPword WORD );
+CLPbyte CLP_API clpLowByte( CLPword WORD );
 
 #endif

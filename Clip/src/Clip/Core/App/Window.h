@@ -1,38 +1,38 @@
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
+#ifndef CLP_WINDOW_H_
+#define CLP_WINDOW_H_
 
-#if defined( CL_PLATFORM_WINDOWS )
+#if defined( CLP_PLATFORM_WINDOWS )
 
 #include <Windows.h>
 
 #include "../Core.h"
 
-typedef struct CL_API _tagCLwindow
+typedef struct CLP_API tagCLPwindow
 {
 	HWND  m_hWnd;
 	HINSTANCE hInstance;
-#ifdef CL_API_OPENGL
+#ifdef CLP_API_OPENGL
 	HGLRC m_hGLRC;
-#elif defined( CL_API_VULKAN )
+#elif defined( CLP_API_VULKAN )
 
-#elif defined( CL_API_DIRECTX )
+#elif defined( CLP_API_DIRECTX )
 
 #endif
-} _CLwindow;
+} CLPwindow;
 
-CL_API _CLwindow* clCreateWindow( const wchar_t* title, unsigned int m_width, unsigned int m_height );
-CL_API void clFreeWindow( _CLwindow* window );
+CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int m_width, unsigned int m_height );
+CLP_API void clpFreeWindow( CLPwindow* window );
 
-CL_API void clPollEvents();
+CLP_API void clpPollEvents();
 
-#elif defined( CL_PLATFORM_LINUX )
+#elif defined( CLP_PLATFORM_LINUX )
 
 #include <X11/Xlib>
 
-class _CLwindow
+typedef class tagCLPwindow
 {
 
-};
+} CLPwindow;
 
 #endif
 

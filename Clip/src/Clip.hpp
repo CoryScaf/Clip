@@ -1,5 +1,5 @@
-#ifndef _CLIP_HPP_
-#define _CLIP_HPP_
+#ifndef CLP_CLIP_HPP_
+#define CLP_CLIP_HPP_
 
 // Core components
 extern "C"

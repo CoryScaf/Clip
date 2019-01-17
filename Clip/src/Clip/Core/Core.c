@@ -1,40 +1,40 @@
 #include "Core.h"
 
-CLdword CL_API clHighDWord( CLqword QWORD )
+CLPdword CLP_API clpHighDWord( CLPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFFu;
 	QWORD >>= 4u;
-	return (CLdword)QWORD;
+	return (CLPdword)QWORD;
 }
 
-CLdword CL_API clLowDWord( CLqword QWORD )
+CLPdword CLP_API clpLowDWord( CLPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFF00000000u;
-	return (CLdword)QWORD;
+	return (CLPdword)QWORD;
 }
 
-CLword CL_API clHighWord( CLdword DWORD )
+CLPword CLP_API clpHighWord( CLPdword DWORD )
 {
 	DWORD &= 0xFFFFu;
 	DWORD >>= 2u;
-	return (CLword)DWORD;
+	return (CLPword)DWORD;
 }
 
-CLword CL_API clLowWord( CLdword DWORD )
+CLPword CLP_API clpLowWord( CLPdword DWORD )
 {
 	DWORD &= 0xFFFF0000u;
-	return (CLword)DWORD;
+	return (CLPword)DWORD;
 }
 
-CLbyte CL_API clHighByte( CLword WORD )
+CLPbyte CLP_API clpHighByte( CLPword WORD )
 {
 	WORD &= 0xFFu;
 	WORD >>= 1u;
-	return (CLbyte)WORD;
+	return (CLPbyte)WORD;
 }
 
-CLbyte CL_API clLowByte( CLword WORD )
+CLPbyte CLP_API clpLowByte( CLPword WORD )
 {
 	WORD &= 0xFF00u;
-	return (CLbyte)WORD;
+	return (CLPbyte)WORD;
 }

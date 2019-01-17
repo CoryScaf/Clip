@@ -4,26 +4,29 @@
 #include "Clip/Core/Events/Event.h"
 #include "Clip/Core/Events/EventFunctions.h"
 
-#ifdef CL_PLATFORM_WINDOWS
+#ifdef CLP_PLATFORM_WINDOWS
 
-LRESULT CALLBACK clWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+LRESULT CALLBACK clpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
-CLbyte wcInstances = 0;
+CLPbyte wcInstances = 0;
 
 
-CL_API _CLwindow* clCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
+CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
 {
-	_CLwindow* window = malloc( sizeof( _CLwindow ) );
-	memset( window, 0, sizeof( _CLwindow ) );
+	// Create new CLPwindow* and zero it out
+	CLPwindow* window = malloc( sizeof( CLPwindow ) );
+	memset( window, 0, sizeof( CLPwindow ) );
 	
+	// Get hInstance
 	window->hInstance = GetModuleHandle( NULL );
 
+	// If CLIPENGINEWINDOW WNDCLASSEX isn't made already then make and register it
 	if( wcInstances == 0 )
 	{
 		WNDCLASSEX wc ={ 0 };
 		wc.cbSize = sizeof( WNDCLASSEX );
 		wc.style = 0;
-		wc.lpfnWndProc = clWndProc;
+		wc.lpfnWndProc = clpWndProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
 		wc.hInstance = window->hInstance;
@@ -37,12 +40,14 @@ CL_API _CLwindow* clCreateWindow( const wchar_t* title, unsigned int width, unsi
 		SetLastError( 0 );
 		if( !RegisterClassEx( &wc ) )
 		{
-			CL_CORE_LOG_FATAL( "Failed Window Class Register : %u", GetLastError() );
+			CLP_CORE_LOG_FATAL( "Failed Window Class Register : %u", GetLastError() );
 			return NULL;
 		}
 	}
+	// Keep track of the CLIPENGINEWINDOW WNDCLASSEX instances needed
 	wcInstances++;
 	
+	// This is to determine the window size including the system menu
 	RECT wr;
 	wr.left = 100;
 	wr.right = width + wr.left;
@@ -51,6 +56,7 @@ CL_API _CLwindow* clCreateWindow( const wchar_t* title, unsigned int width, unsi
 	AdjustWindowRectEx( &wr, WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU, FALSE, 0 );
 	SetLastError( 0 );
 	
+	// Create the actual window
 	window->m_hWnd = CreateWindowEx( 0, L"CLIPENGINEWINDOW", title,
 									 WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU,
 									 CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL,
@@ -58,58 +64,65 @@ CL_API _CLwindow* clCreateWindow( const wchar_t* title, unsigned int width, unsi
 
 	if( !window->m_hWnd )
 	{
-		CL_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->m_hWnd );
+		CLP_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->m_hWnd );
 		return NULL;
 	}
 
+	// Show the window
 	ShowWindow( window->m_hWnd, 5 );
 	UpdateWindow( window->m_hWnd );
 
-#if defined( CL_API_OPENGL )
-	//create context
-#elif defined( CL_API_VULKAN )
-
-#elif defined( CL_API_DIRECTX )
+#if defined( CLP_API_OPENGL )
+	// create OpenGL context
+#elif defined( CLP_API_VULKAN )
+	// create Vulkan surface
+#elif defined( CLP_API_DIRECTX )
 
 #endif
 	return window;
 }
 
-void CL_API clFreeWindow( _CLwindow* window )
+void CLP_API clpFreeWindow( CLPwindow* window )
 {
+	// destroy window and free CLPwindow
 	DestroyWindow( window->m_hWnd );
 	free( window );
+	// remove one CLIPENGINEWINDOW WNDCLASSEX instance
 	wcInstances--;
+	// if instances equal 0 then unregister the WNDCLASSEX
 	if( wcInstances == 0 )
 	{
 		UnregisterClass( L"CLIPENGINEWINDOW", GetModuleHandle( NULL ) );
 	}
 }
 
-void CL_API clPollEvents()
+void CLP_API clpPollEvents()
 {
+	// Gather the different events that happen
 	MSG msg;
 	GetMessage( &msg, NULL, 0, 0 );
 	TranslateMessage( &msg );
 	DispatchMessage( &msg );
 }
 
-LRESULT CALLBACK clWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK clpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	if( uMsg == WM_CLOSE || uMsg == WM_QUIT )
 	{
-		_CLevent event;
-		event.catigory = CL_EVENT_CAT_APPLICATION;
-		event.type = CL_EVENT_WINDOW_CLOSE;
+		// Window Close Event
+		CLPevent event;
+		event.catigory = CLP_EVENT_CAT_APPLICATION;
+		event.type = CLP_EVENT_WINDOW_CLOSE;
 		event.arg0 = 0;
 		event.arg1 = 0;
-		clSetLastEvent( event );
+		clpSetLastEvent( event );
 	}
 	else if( uMsg == WM_SIZE )
 	{
-		_CLevent event;
-		event.catigory = CL_EVENT_CAT_APPLICATION;
-		event.type = CL_EVENT_WINDOW_RESIZE;
+		// Window Resize Event
+		CLPevent event;
+		event.catigory = CLP_EVENT_CAT_APPLICATION;
+		event.type = CLP_EVENT_WINDOW_RESIZE;
 		if( wParam == SIZE_MAXIMIZED )
 			event.arg0 = 1;
 		else if( wParam == SIZE_MINIMIZED )
@@ -118,22 +131,23 @@ LRESULT CALLBACK clWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 			event.arg0 = 3;
 		else event.arg0 = 0;
 		event.arg1 = LOWORD( lParam );
-		CLqword qword = HIWORD( lParam );
+		CLPqword qword = HIWORD( lParam );
 		event.arg1 |= qword << 4;
-		clSetLastEvent( event );
+		clpSetLastEvent( event );
 	}
 	else if( uMsg == WM_ACTIVATE )
 	{
-		_CLevent event;
-		event.catigory = CL_EVENT_CAT_APPLICATION;
-		
+		// Window Focus / Lose Focus Event
+		CLPevent event;
+		event.catigory = CLP_EVENT_CAT_APPLICATION;
+
 		if( LOWORD( wParam ) == WA_ACTIVE || LOWORD( wParam ) == WA_CLICKACTIVE )
 		{
-			event.type = CL_EVENT_WINDOW_FOCUS;
+			event.type = CLP_EVENT_WINDOW_FOCUS;
 		}
 		else
 		{
-			event.type = CL_EVENT_WINDOW_LOST_FOCUS;
+			event.type = CLP_EVENT_WINDOW_LOST_FOCUS;
 		}
 	}
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );

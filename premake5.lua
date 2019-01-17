@@ -35,8 +35,8 @@ project "Clip"
 
         defines
         {
-            "CL_PLATFORM_WINDOWS",
-            "CL_BUILD_DLL"
+            "CLP_PLATFORM_WINDOWS",
+            "CLP_BUILD_DLL"
         }
 
         postbuildcommands
@@ -45,17 +45,17 @@ project "Clip"
         }
 
     filter "configurations:Debug"
-        defines "CL_DEBUG"
+        defines "CLP_DEBUG"
         buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
-        defines "CL_RELEASE"
+        defines "CLP_RELEASE"
         buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Dist"
-        defines "CL_DIST"
+        defines "CLP_DIST"
         buildoptions "/MD"
         optimize "On"
 
@@ -92,20 +92,20 @@ project "Sandbox"
 
         defines
         {
-            "CL_PLATFORM_WINDOWS"
+            "CLP_PLATFORM_WINDOWS"
         }
 
     filter "configurations:Debug"
-        defines "CL_DEBUG"
+        defines "CLP_DEBUG"
         buildoptions "/MTd"
         symbols "On"
 
     filter "configurations:Release"
-        defines "CL_RELEASE"
+        defines "CLP_RELEASE"
         buildoptions "/MT"
         optimize "On"
 
     filter "configurations:Dist"
-        defines "CL_DIST"
+        defines "CLP_DIST"
         buildoptions "/MT"
         optimize "On"

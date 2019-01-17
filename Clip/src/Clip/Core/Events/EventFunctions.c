@@ -3,28 +3,28 @@
 #include <string.h>
 #include <stdlib.h>
 
-_CLevent* lastEvent = CL_NULL;
+CLPevent* lastEvent = CLP_NULL;
 
-int CL_API clGetXCoord( CLqword QWORD )
+int CLP_API clpGetXCoord( CLPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFFu;
 	QWORD >>= 4u;
 	return (int)QWORD;
 }
 
-int CL_API clGetYCoord( CLqword QWORD )
+int CLP_API clpGetYCoord( CLPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFF00000000u;
 	return (int)QWORD;
 }
 
-_CLevent clGetLastEvent()
+CLPevent clpGetLastEvent()
 {
-	_CLevent event;
-	if( lastEvent == CL_NULL )
+	CLPevent event;
+	if( lastEvent == CLP_NULL )
 	{
-		event.catigory = CL_EVENT_CAT_NONE;
-		event.type = CL_EVENT_NONE;
+		event.catigory = CLP_EVENT_CAT_NONE;
+		event.type = CLP_EVENT_NONE;
 		event.arg0 = 0;
 		event.arg1 = 0;
 	}
@@ -38,14 +38,14 @@ _CLevent clGetLastEvent()
 	return event;
 }
 
-void clSetLastEvent( _CLevent event )
+void clpSetLastEvent( CLPevent event )
 {
-	if( lastEvent != CL_NULL )
+	if( lastEvent != CLP_NULL )
 	{
 		free( lastEvent );
-		lastEvent = CL_NULL;
+		lastEvent = CLP_NULL;
 	}
-	lastEvent = malloc( sizeof( _CLevent ) );
+	lastEvent = malloc( sizeof( CLPevent ) );
 	memset( lastEvent, 0, sizeof( lastEvent ) );
 	lastEvent->catigory = event.catigory;
 	lastEvent->type = event.type;

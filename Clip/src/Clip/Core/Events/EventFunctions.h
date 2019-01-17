@@ -1,12 +1,12 @@
-#ifndef _EVENTFUNCTIONS_H_
-#define _EVENTFUNCTIONS_H_
+#ifndef CLP_EVENTFUNCTIONS_H_
+#define CLP_EVENTFUNCTIONS_H_
 
 #include "Event.h"
 
-int CL_API clGetXCoord( CLqword QWORD );
-int CL_API clGetYCoord( CLqword QWORD );
+int CLP_API clpGetXCoord( CLPqword QWORD );
+int CLP_API clpGetYCoord( CLPqword QWORD );
 
-_CLevent CL_API clGetLastEvent();
-void CL_API clSetLastEvent( _CLevent event );
+CLPevent CLP_API clpGetLastEvent();
+void CLP_API clpSetLastEvent( CLPevent event );
 
 #endif
