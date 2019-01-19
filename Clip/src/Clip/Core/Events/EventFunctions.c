@@ -18,6 +18,11 @@ int CP_API cpGetYCoord( CPqword QWORD )
 	return (int)QWORD;
 }
 
+int CP_API cpGetScrollDelta( CPdword DWORD )
+{
+	return (int)DWORD;
+}
+
 CPevent cpGetLastEvent()
 {
 	CPevent event;

@@ -153,7 +153,7 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( uMsg == WM_KEYDOWN )
 	{
-		// Input Key Pressed
+		// Input Key Pressed Event
 		CPevent event;
 		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_KEYBOARD;
 		event.type = CP_EVENT_KEY_PRESSED;
@@ -167,7 +167,7 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( uMsg == WM_KEYUP )
 	{
-		// Input Key Released
+		// Input Key Released Event
 		CPevent event;
 		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_KEYBOARD;
 		event.type = CP_EVENT_KEY_RELEASED;
@@ -177,7 +177,119 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( uMsg == WM_MOVE )
 	{
-
+		// Window Moved Event
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_APPLICATION;
+		event.type = CP_EVENT_WINDOW_MOVED;
+		event.arg0 = 0;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_MOUSEMOVE )
+	{
+		// Input Mouse Moved Event
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_MOVED;
+		event.arg0 = 0;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_LBUTTONDOWN )
+	{
+		// Input Mouse Button Pressed Event ( Left Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_PRESSED;
+		event.arg0 = 0x02;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_MBUTTONDOWN )
+	{
+		// Input Mouse Button Pressed Event ( Middle Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_PRESSED;
+		event.arg0 = 0x04;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_RBUTTONDOWN )
+	{
+		// Input Mouse Button Pressed Event ( Right Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_PRESSED;
+		event.arg0 = 0x08;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_XBUTTONDOWN )
+	{
+		// Input Mouse Button Pressed Event ( X Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_PRESSED;
+		if( HIWORD( wParam ) & 0x01 )
+			event.arg0 = 0x10;
+		else if( HIWORD( wParam ) & 0x02 )
+			event.arg0 = 0x20;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_LBUTTONUP )
+	{
+		// Input Mouse Button Released Event ( Left Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_RELEASED;
+		event.arg0 = 0x02;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_MBUTTONUP )
+	{
+		// Input Mouse Button Released Event ( Middle Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_RELEASED;
+		event.arg0 = 0x04;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_RBUTTONUP )
+	{
+		// Input Mouse Button Released Event ( Right Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_RELEASED;
+		event.arg0 = 0x08;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_XBUTTONUP )
+	{
+		// Input Mouse Button Released Event ( X Mouse )
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_BUTTON_RELEASED;
+		if( HIWORD( lParam ) & 0x01 )
+			event.arg0 = 0x10;
+		else if( HIWORD( lParam ) & 0x02 )
+			event.arg0 = 0x20;
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_MOUSEWHEEL )
+	{
+		// Input Mouse Scrool Event
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_MOUSE;
+		event.type = CP_EVENT_MOUSE_SCROLLED;
+		event.arg0 = HIWORD( wParam );
+		event.arg1 = (CPqword)lParam;
+		cpSetLastEvent( event );
 	}
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
