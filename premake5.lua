@@ -35,8 +35,7 @@ project "Clip"
 
         defines
         {
-            "CLP_PLATFORM_WINDOWS",
-            "CLP_BUILD_DLL"
+            "CP_BUILD_DLL"
         }
 
         postbuildcommands
@@ -45,17 +44,17 @@ project "Clip"
         }
 
     filter "configurations:Debug"
-        defines "CLP_DEBUG"
+        defines "CP_DEBUG"
         buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
-        defines "CLP_RELEASE"
+        defines "CP_RELEASE"
         buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Dist"
-        defines "CLP_DIST"
+        defines "CP_DIST"
         buildoptions "/MD"
         optimize "On"
 
@@ -90,22 +89,17 @@ project "Sandbox"
         staticruntime "On"
         systemversion "latest"
 
-        defines
-        {
-            "CLP_PLATFORM_WINDOWS"
-        }
-
     filter "configurations:Debug"
-        defines "CLP_DEBUG"
+        defines "CP_DEBUG"
         buildoptions "/MTd"
         symbols "On"
 
     filter "configurations:Release"
-        defines "CLP_RELEASE"
+        defines "CP_RELEASE"
         buildoptions "/MT"
         optimize "On"
 
     filter "configurations:Dist"
-        defines "CLP_DIST"
+        defines "CP_DIST"
         buildoptions "/MT"
         optimize "On"

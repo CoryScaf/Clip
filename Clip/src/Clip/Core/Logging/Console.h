@@ -1,30 +1,38 @@
-#ifndef CLP_CONSOLE_H_
-#define CLP_CONSOLE_H_
+#ifndef CP_CONSOLE_H_
+#define CP_CONSOLE_H_
 
 #include <stdio.h>
 
-typedef enum tagCLPconsoleparsetype
-{
-	CLP_CONSOLE_PARSE_PRINTF_STYLE,
-	CLP_CONSOLE_PARSE_BRACE_STYLE
-} CLPconsoleparsetype;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef struct tagCLPconsole
-{
-	CLPconsoleparsetype parseType;
-} CLPconsole;
+	typedef enum tagCPconsoleparsetype
+	{
+		CP_CONSOLE_PARSE_PRINTF_STYLE,
+		CP_CONSOLE_PARSE_BRACE_STYLE
+	} CPconsoleparsetype;
+
+	typedef struct tagCPconsole
+	{
+		CPconsoleparsetype parseType;
+	} CPconsole;
 
 
-#ifdef CLP_DIST
-#	define CLP_CORE_LOG_FATAL( ... )
-#	define CLP_CORE_LOG_ERROR( ... )
-#	define CLP_CORE_LOG_WARNING( ... )
-#	define CLP_CORE_LOG_INFO( ... )
+#ifdef CP_DIST
+#	define CP_CORE_LOG_FATAL( ... )
+#	define CP_CORE_LOG_ERROR( ... )
+#	define CP_CORE_LOG_WARNING( ... )
+#	define CP_CORE_LOG_INFO( ... )
 #else
-#	define CLP_CORE_LOG_FATAL( ... ) printf( __VA_ARGS__ )
-#	define CLP_CORE_LOG_ERROR( ... ) printf( __VA_ARGS__ ) 
-#	define CLP_CORE_LOG_WARNING( ... ) printf( __VA_ARGS__ )
-#	define CLP_CORE_LOG_INFO( ... ) printf( __VA_ARGS__ )
+#	define CP_CORE_LOG_FATAL( ... ) printf( __VA_ARGS__ )
+#	define CP_CORE_LOG_ERROR( ... ) printf( __VA_ARGS__ ) 
+#	define CP_CORE_LOG_WARNING( ... ) printf( __VA_ARGS__ )
+#	define CP_CORE_LOG_INFO( ... ) printf( __VA_ARGS__ )
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

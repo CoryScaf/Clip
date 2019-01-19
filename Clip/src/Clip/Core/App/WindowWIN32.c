@@ -4,18 +4,18 @@
 #include "Clip/Core/Events/Event.h"
 #include "Clip/Core/Events/EventFunctions.h"
 
-#ifdef CLP_PLATFORM_WINDOWS
+#ifdef CP_PLATFORM_WINDOWS
 
-LRESULT CALLBACK clpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
-CLPbyte wcInstances = 0;
+CPbyte wcInstances = 0;
 
 
-CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
+CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
 {
-	// Create new CLPwindow* and zero it out
-	CLPwindow* window = malloc( sizeof( CLPwindow ) );
-	memset( window, 0, sizeof( CLPwindow ) );
+	// Create new CPwindow* and zero it out
+	CPwindow* window = malloc( sizeof( CPwindow ) );
+	memset( window, 0, sizeof( CPwindow ) );
 	
 	// Get hInstance
 	window->hInstance = GetModuleHandle( NULL );
@@ -26,7 +26,7 @@ CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, un
 		WNDCLASSEX wc ={ 0 };
 		wc.cbSize = sizeof( WNDCLASSEX );
 		wc.style = 0;
-		wc.lpfnWndProc = clpWndProc;
+		wc.lpfnWndProc = cpWndProc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
 		wc.hInstance = window->hInstance;
@@ -40,7 +40,7 @@ CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, un
 		SetLastError( 0 );
 		if( !RegisterClassEx( &wc ) )
 		{
-			CLP_CORE_LOG_FATAL( "Failed Window Class Register : %u", GetLastError() );
+			CP_CORE_LOG_FATAL( "Failed Window Class Register : %u", GetLastError() );
 			return NULL;
 		}
 	}
@@ -64,7 +64,7 @@ CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, un
 
 	if( !window->m_hWnd )
 	{
-		CLP_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->m_hWnd );
+		CP_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->m_hWnd );
 		return NULL;
 	}
 
@@ -72,19 +72,19 @@ CLP_API CLPwindow* clpCreateWindow( const wchar_t* title, unsigned int width, un
 	ShowWindow( window->m_hWnd, 5 );
 	UpdateWindow( window->m_hWnd );
 
-#if defined( CLP_API_OPENGL )
+#if defined( CP_API_OPENGL )
 	// create OpenGL context
-#elif defined( CLP_API_VULKAN )
+#elif defined( CP_API_VULKAN )
 	// create Vulkan surface
-#elif defined( CLP_API_DIRECTX )
+#elif defined( CP_API_DIRECTX )
 
 #endif
 	return window;
 }
 
-void CLP_API clpFreeWindow( CLPwindow* window )
+void CP_API cpFreeWindow( CPwindow* window )
 {
-	// destroy window and free CLPwindow
+	// destroy window and free CPwindow
 	DestroyWindow( window->m_hWnd );
 	free( window );
 	// remove one CLIPENGINEWINDOW WNDCLASSEX instance
@@ -96,7 +96,7 @@ void CLP_API clpFreeWindow( CLPwindow* window )
 	}
 }
 
-void CLP_API clpPollEvents()
+void CP_API cpPollEvents()
 {
 	// Gather the different events that happen
 	MSG msg;
@@ -105,24 +105,24 @@ void CLP_API clpPollEvents()
 	DispatchMessage( &msg );
 }
 
-LRESULT CALLBACK clpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	if( uMsg == WM_CLOSE || uMsg == WM_QUIT )
 	{
 		// Window Close Event
-		CLPevent event;
-		event.catigory = CLP_EVENT_CAT_APPLICATION;
-		event.type = CLP_EVENT_WINDOW_CLOSE;
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_APPLICATION;
+		event.type = CP_EVENT_WINDOW_CLOSE;
 		event.arg0 = 0;
 		event.arg1 = 0;
-		clpSetLastEvent( event );
+		cpSetLastEvent( event );
 	}
 	else if( uMsg == WM_SIZE )
 	{
 		// Window Resize Event
-		CLPevent event;
-		event.catigory = CLP_EVENT_CAT_APPLICATION;
-		event.type = CLP_EVENT_WINDOW_RESIZE;
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_APPLICATION;
+		event.type = CP_EVENT_WINDOW_RESIZE;
 		if( wParam == SIZE_MAXIMIZED )
 			event.arg0 = 1;
 		else if( wParam == SIZE_MINIMIZED )
@@ -131,24 +131,53 @@ LRESULT CALLBACK clpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
 			event.arg0 = 3;
 		else event.arg0 = 0;
 		event.arg1 = LOWORD( lParam );
-		CLPqword qword = HIWORD( lParam );
+		CPqword qword = HIWORD( lParam );
 		event.arg1 |= qword << 4;
-		clpSetLastEvent( event );
+		cpSetLastEvent( event );
 	}
 	else if( uMsg == WM_ACTIVATE )
 	{
 		// Window Focus / Lose Focus Event
-		CLPevent event;
-		event.catigory = CLP_EVENT_CAT_APPLICATION;
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_APPLICATION;
 
 		if( LOWORD( wParam ) == WA_ACTIVE || LOWORD( wParam ) == WA_CLICKACTIVE )
 		{
-			event.type = CLP_EVENT_WINDOW_FOCUS;
+			event.type = CP_EVENT_WINDOW_FOCUS;
 		}
 		else
 		{
-			event.type = CLP_EVENT_WINDOW_LOST_FOCUS;
+			event.type = CP_EVENT_WINDOW_LOST_FOCUS;
 		}
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_KEYDOWN )
+	{
+		// Input Key Pressed
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_KEYBOARD;
+		event.type = CP_EVENT_KEY_PRESSED;
+		event.arg0 = (CPdword)wParam;
+		event.arg1 = 0;
+		event.arg1 &= 0xFFFF & lParam;	// repeat bits
+		CPqword high = lParam & 0x40000000;	// previous state bit
+		high <<= 2;	// make it the highDWord;
+		event.arg1 &= high;
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_KEYUP )
+	{
+		// Input Key Released
+		CPevent event;
+		event.catigory = CP_EVENT_CAT_INPUT | CP_EVENT_CAT_KEYBOARD;
+		event.type = CP_EVENT_KEY_RELEASED;
+		event.arg0 = (CPdword)wParam;		// repeat bits
+		event.arg1 = (CPqword)( lParam & 0x40000000 );		// previous state bit
+		cpSetLastEvent( event );
+	}
+	else if( uMsg == WM_MOVE )
+	{
+
 	}
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }

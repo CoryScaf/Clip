@@ -1,12 +1,21 @@
-#ifndef CLP_EVENTFUNCTIONS_H_
-#define CLP_EVENTFUNCTIONS_H_
+#ifndef CP_EVENTFUNCTIONS_H_
+#define CP_EVENTFUNCTIONS_H_
 
 #include "Event.h"
 
-int CLP_API clpGetXCoord( CLPqword QWORD );
-int CLP_API clpGetYCoord( CLPqword QWORD );
+#ifdef __cplusplus
+extern "C" {
+#endif
+// GetXCoord will retrieve the X position of events like MOVE, MOUSE_MOVE, etc
+int CP_API cpGetXCoord( CPqword QWORD );
+// GetYCoord will retrieve the Y position of events like MOVE, MOUSE_MOVE, etc
+int CP_API cpGetYCoord( CPqword QWORD );
 
-CLPevent CLP_API clpGetLastEvent();
-void CLP_API clpSetLastEvent( CLPevent event );
+CPevent CP_API cpGetLastEvent();
+void CP_API cpSetLastEvent( CPevent event );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -1,48 +1,56 @@
-#ifndef CLP_EVENT_H_
-#define CLP_EVENT_H_
+#ifndef CP_EVENT_H_
+#define CP_EVENT_H_
 
 #include "Clip/Core/Core.h"
 
-typedef enum tagCLPeventtype
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef enum tagCPeventtype
 {
 	// no event
-	CLP_EVENT_NONE = 0,
+	CP_EVENT_NONE = 0,
 	// window/application events
-	CLP_EVENT_WINDOW_CLOSE = 1,
-	CLP_EVENT_WINDOW_RESIZE = 2,
-	CLP_EVENT_WINDOW_FOCUS = 3,
-	CLP_EVENT_WINDOW_LOST_FOCUS = 4,
-	CLP_EVENT_WINDOW_MOVED = 5,
+	CP_EVENT_WINDOW_CLOSE = 1,
+	CP_EVENT_WINDOW_RESIZE = 2,
+	CP_EVENT_WINDOW_FOCUS = 3,
+	CP_EVENT_WINDOW_LOST_FOCUS = 4,
+	CP_EVENT_WINDOW_MOVED = 5,
 	// keyboard events
-	CLP_EVENT_KEY_PRESSED = 6,
-	CLP_EVENT_KEY_RELEASED = 7,
+	CP_EVENT_KEY_PRESSED = 6,
+	CP_EVENT_KEY_RELEASED = 7,
 	// mouse events
-	CLP_EVENT_MOUSE_MOVED = 8,
-	CLP_EVENT_MOUSE_BUTTON_PRESSED = 9,
-	CLP_EVENT_MOUSE_BUTTON_RELEASED = 10,
-	CLP_EVENT_MOUSE_SCROLLED = 11,
+	CP_EVENT_MOUSE_MOVED = 8,
+	CP_EVENT_MOUSE_BUTTON_PRESSED = 9,
+	CP_EVENT_MOUSE_BUTTON_RELEASED = 10,
+	CP_EVENT_MOUSE_SCROLLED = 11,
 	// completer application events
-	CLP_EVENT_APP_TICK = 12,
-	CLP_EVENT_APP_UPDATE = 13,
-	CLP_EVENT_APP_RENDER = 14
-} CLPeventtype;
+	CP_EVENT_APP_TICK = 12,
+	CP_EVENT_APP_UPDATE = 13,
+	CP_EVENT_APP_RENDER = 14
+} CPeventtype;
 
-typedef enum tagCLPeventcategory
+typedef enum tagCPeventcategory
 {
-	CLP_EVENT_CAT_NONE			= 0,
-	CLP_EVENT_CAT_KEYBOARD		= CLP_BIT( 0 ),
-	CLP_EVENT_CAT_MOUSE			= CLP_BIT( 1 ),
-	CLP_EVENT_CAT_APPLICATION	= CLP_BIT( 2 ),
-	CLP_EVENT_CAT_INPUT			= CLP_BIT( 3 )
-} CLPeventcategory;
+	CP_EVENT_CAT_NONE			= 0,
+	CP_EVENT_CAT_KEYBOARD		= CP_BIT( 0 ),
+	CP_EVENT_CAT_MOUSE			= CP_BIT( 1 ),
+	CP_EVENT_CAT_APPLICATION	= CP_BIT( 2 ),
+	CP_EVENT_CAT_INPUT			= CP_BIT( 3 )
+} CPeventcategory;
 
-typedef struct CLP_API tagCLPevent
+typedef struct CP_API tagCPevent
 {
-	CLPeventtype type;
-	CLPbyte catigory;
+	CPeventtype type;
+	CPbyte catigory;
 
-	CLPdword arg0;
-	CLPqword arg1;
-} CLPevent;
+	CPdword arg0;
+	CPqword arg1;
+} CPevent;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

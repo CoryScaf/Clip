@@ -3,12 +3,12 @@
 
 int main()
 {
-	CLPwindow* window = clpCreateWindow( L"Test Window", 1280, 720 );
+	CPwindow* window = cpCreateWindow( L"Test Window", 1280, 720 );
 
-	while( clpGetLastEvent().type != CLP_EVENT_WINDOW_CLOSE )
+	while( cpGetLastEvent().type != CP_EVENT_WINDOW_CLOSE )
 	{
-		std::cout << clpGetLastEvent().type << std::endl;
-		clpPollEvents();
+		std::cout << cpGetLastEvent().type << std::endl;
+		cpPollEvents();
 	}
 	return 0;
 }
