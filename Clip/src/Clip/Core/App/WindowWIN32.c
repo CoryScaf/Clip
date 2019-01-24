@@ -4,6 +4,10 @@
 #include "Clip/Core/Events/Event.h"
 #include "Clip/Core/Events/EventFunctions.h"
 
+#ifdef CP_API_VULKAN
+#include <vulkan/vulkan.h>
+#endif
+
 #ifdef CP_PLATFORM_WINDOWS
 
 LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
@@ -76,6 +80,7 @@ CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsig
 	// create OpenGL context
 #elif defined( CP_API_VULKAN )
 	// create Vulkan surface
+	
 #elif defined( CP_API_DIRECTX )
 
 #endif

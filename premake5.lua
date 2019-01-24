@@ -11,6 +11,7 @@ workspace "ClipEngine"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}";
 
 project "Clip"
+
     location "Clip"
     kind "SharedLib"
     language "C++"
@@ -26,7 +27,11 @@ project "Clip"
         "%{prj.name}/src/**.cpp"
     }
 
-    includedirs "%{prj.name}/src"
+    includedirs 
+    {
+        "%{prj.name}/src",
+        "$VULKAN_SDK/include"
+    }
 
     filter "system:windows"
         cppdialect "C++17"
