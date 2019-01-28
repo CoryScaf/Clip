@@ -30,7 +30,7 @@ project "Clip"
     includedirs 
     {
         "%{prj.name}/src",
-        "$VULKAN_SDK/include"
+        "%VULKAN_SDK%/include"
     }
 
     filter "system:windows"
