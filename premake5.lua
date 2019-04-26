@@ -19,17 +19,23 @@ project "Clip"
     targetdir ( "bin/" .. outputdir .. "/%{prj.name}" )
     objdir ( "bin-int/" .. outputdir .. "/%{prj.name}" )
 
+    pchheader "pch.h"
+    pchsource "%{prj.name}/pch.c"
+
     files
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.hpp",
         "%{prj.name}/src/**.c",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/pch.h",
+        "%{prj.name}/pch.c"
     }
 
     includedirs 
     {
         "%{prj.name}/src",
+        "%{prj.name}/",
         "%VULKAN_SDK%/include"
     }
 

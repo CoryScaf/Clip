@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Window.h"
 
 #include "Clip/Core/Logging/Console.h"
@@ -61,20 +62,20 @@ CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsig
 	SetLastError( 0 );
 	
 	// Create the actual window
-	window->m_hWnd = CreateWindowEx( 0, L"CLIPENGINEWINDOW", title,
+	window->hWnd = CreateWindowEx( 0, L"CLIPENGINEWINDOW", title,
 									 WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU,
 									 CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top, NULL, NULL,
 									 window->hInstance, NULL );
 
-	if( !window->m_hWnd )
+	if( !window->hWnd )
 	{
-		CP_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->m_hWnd );
+		CP_CORE_LOG_FATAL( "Failed Window Creation : %u, %p", GetLastError(), window->hWnd );
 		return NULL;
 	}
 
 	// Show the window
-	ShowWindow( window->m_hWnd, 5 );
-	UpdateWindow( window->m_hWnd );
+	ShowWindow( window->hWnd, 5 );
+	UpdateWindow( window->hWnd );
 
 #if defined( CP_API_OPENGL )
 	// create OpenGL context
@@ -90,7 +91,7 @@ CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsig
 void CP_API cpFreeWindow( CPwindow* window )
 {
 	// destroy window and free CPwindow
-	DestroyWindow( window->m_hWnd );
+	DestroyWindow( window->hWnd );
 	free( window );
 	// remove one CLIPENGINEWINDOW WNDCLASSEX instance
 	wcInstances--;
@@ -114,6 +115,7 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	if( uMsg == WM_CLOSE || uMsg == WM_QUIT )
 	{
+		CP_CORE_LOG_ERROR( "The thing shoulda worked\n" );
 		// Window Close Event
 		CPevent event;
 		event.catigory = CP_EVENT_CAT_APPLICATION;

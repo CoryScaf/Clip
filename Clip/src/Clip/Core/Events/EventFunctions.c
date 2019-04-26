@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "EventFunctions.h"
 
 #include <string.h>
@@ -51,9 +52,12 @@ void cpSetLastEvent( CPevent event )
 		lastEvent = CP_NULL;
 	}
 	lastEvent = malloc( sizeof( CPevent ) );
-	memset( lastEvent, 0, sizeof( lastEvent ) );
-	lastEvent->catigory = event.catigory;
-	lastEvent->type = event.type;
-	lastEvent->arg0 = event.arg0;
-	lastEvent->arg1 = event.arg1;
+	if( lastEvent )
+	{
+		memset( lastEvent, 0, sizeof( lastEvent ) );
+		lastEvent->catigory = event.catigory;
+		lastEvent->type = event.type;
+		lastEvent->arg0 = event.arg0;
+		lastEvent->arg1 = event.arg1;
+	}
 }
