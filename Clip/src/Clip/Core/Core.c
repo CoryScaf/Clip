@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Core.h"
 
 CPdword CP_API cpHighDWord( CPqword QWORD )
