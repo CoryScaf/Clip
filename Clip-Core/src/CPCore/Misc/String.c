@@ -2,7 +2,7 @@
 #include "String.h"
 #include <string.h>
 #include <stdlib.h>
-#include "Clip/Core/Logging/Console.h"
+#include "CPCore/Logging/Console.h"
 
 CPpstring cpCreateString( const char* str )
 {

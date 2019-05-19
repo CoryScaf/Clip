@@ -4,6 +4,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
+
+#ifdef CP_PLATFORM_LINUX
+#define LOCALTIME( a, b ) localtime_r( b, a )
+#elif defined( CP_PLATFORM_WINDOWS )
+#define LOCALTIME( a, b ) localtime_s( a, b )
+#else
+#define LOCALTIME( a, b )
+#endif
+
 
 // Allocate the console to the heap
 CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType )
@@ -17,7 +27,7 @@ CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsolep
 	{
 		if( CP_CORE_CONSOLE == CP_NULL )
 		{
-			printf_s( "--- FATAL --- FAILED TO ALLOCATE CONSOLE : ERROR LOGGING WILL NOT WORK" );
+			printf( "--- FATAL --- FAILED TO ALLOCATE CONSOLE : ERROR LOGGING WILL NOT WORK" );
 		}
 		else
 		{
@@ -33,7 +43,7 @@ CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsolep
 	{
 		if( CP_CORE_CONSOLE == CP_NULL )
 		{
-			printf_s( "--- FATAL --- FAILED TO ALLOCATE CONSOLE STRINGS : ERROR LOGGING WILL NOT WORK" );
+			printf( "--- FATAL --- FAILED TO ALLOCATE CONSOLE STRINGS : ERROR LOGGING WILL NOT WORK" );
 		}
 		else
 		{
@@ -58,7 +68,7 @@ CP_API void cpDeleteConsole( CPpconsole console )
 CP_API void cpInitConsoleApps()
 {
 	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "[%t:%e] %n: %l", CP_CONSOLE_PARSE_PRINTF_STYLE );
-	if( CP_CORE_CONSOLE == CP_NULL ) printf_s( "CP_CORE_CONSOLE is null" );
+	if( CP_CORE_CONSOLE == CP_NULL ) printf( "CP_CORE_CONSOLE is null" );
 #ifdef CP_PLATFORM_WINDOWS
 	cp__InitConsoleAppsWIN32();
 #elif defined( CP_PLATFORM_LINUX )
@@ -80,88 +90,62 @@ CP_API void cpUninitConsoleApps()
 // Log error to the console
 CP_API void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
 {
-	if( console->parseType == CP_CONSOLE_PARSE_BRACE_STYLE )
-	{
-		CPdword va_count = 0;
-		va_list list;
+    /*
+    CPdword va_count = 0;
 
-		// determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-		CPdword errLen = (CPdword)strlen( error );
-		for( CPdword i = 0; i < errLen; ++i )
-		{
-			if( error[i] == '%' ) {
-				if( i+1 < errLen ) {
-					char ip1 = error[i+1];
-					if( ip1 == 'c' || ip1 == 'i' || ip1 == 'd' || ip1 == 'f' || ip1 == 's' || ip1 == 'l' || ip1 == 'u' || ip1 == 'b'
-						|| ip1 == '-' || ip1 == '+' || ip1 == '.' || ( ip1 >= '0' && ip1 <= '9' ) ) {
-						va_count++;
-					}
-				}
-			}
-		}
-
-		va_start( list, va_count );
-		// Call OS specific code needed
+    // determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
+    CPdword errLen = (CPdword)strlen( error );
+    for( CPdword i = 0; i < errLen; ++i )
+    {
+    if( error[i] == '%' ) {
+        if( i+1 < errLen ) {
+                char ip1 = error[i+1];
+                if( ip1 == 'c' || ip1 == 'i' || ip1 == 'd' || ip1 == 'f' || ip1 == 's' || ip1 == 'l' || ip1 == 'u' || ip1 == 'b'
+                    || ip1 == '-' || ip1 == '+' || ip1 == '.' || ( ip1 >= '0' && ip1 <= '9' ) ) {
+                    va_count++;
+                }
+            }
+        }
+    }
+    */
+    va_list list;
+    va_start( list, error );
+    // Call OS specific code needed
 #ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogTraceWIN32( console, error, list );
+    cp__ConsoleLogTraceWIN32( console, error, list );
 #elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogTraceLINUX( console, error, list );
+    cp__ConsoleLogTraceLINUX( console, error, list );
 #endif
-		va_end( list );
-	}
-	else
-	{
-		va_list list;
-		va_start( list, error );
-#ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogTraceWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogTraceLINUX( console, error, list );
-#endif
-		va_end( list );
-	}
+    va_end( list );
 }
 
 CP_API void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
 {
-	if( console->parseType == CP_CONSOLE_PARSE_BRACE_STYLE )
-	{
-		CPdword va_count = 0;
-		va_list list;
+    /*
+    CPdword va_count = 0;
+    va_list list;
 
-		// determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-		CPdword errLen = (CPdword)strlen( error );
-		for( CPdword i = 0; i < errLen; ++i )
-		{
-			if( error[i] == '%' ) va_count++;
-		}
-
-		va_start( list, va_count );
-		// Call OS specific code needed
+    // determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
+    CPdword errLen = (CPdword)strlen( error );
+    for( CPdword i = 0; i < errLen; ++i )
+    {
+        if( error[i] == '%' ) va_count++;
+    }
+    */
+    va_list list;
+    va_start( list, error );
+    // Call OS specific code needed
 #ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogInfoWIN32( console, error, list );
+    cp__ConsoleLogInfoWIN32( console, error, list );
 #elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogInfoLINUX( console, error, list );
+    cp__ConsoleLogInfoLINUX( console, error, list );
 #endif
-		va_end( list );
-	}
-	else
-	{
-		va_list list;
-		va_start( list, error );
-#ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogInfoWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogInfoLINUX( console, error, list );
-#endif
-		va_end( list );
-	}
+    va_end( list );
 }
 
 CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
 {
-	if( console->parseType == CP_CONSOLE_PARSE_BRACE_STYLE )
-	{
+    /*
 		CPdword va_count = 0;
 		va_list list;
 
@@ -171,33 +155,21 @@ CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
 		{
 			if( error[i] == '%' ) va_count++;
 		}
-
-		va_start( list, va_count );
-		// Call OS specific code needed
+    */
+    va_list list;
+    va_start( list, error );
+    // Call OS specific code needed
 #ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogWarningWIN32( console, error, list );
+    cp__ConsoleLogWarningWIN32( console, error, list );
 #elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogWarningLINUX( console, error, list );
+    cp__ConsoleLogWarningLINUX( console, error, list );
 #endif
-		va_end( list );
-	}
-	else
-	{
-		va_list list;
-		va_start( list, error );
-#ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogWarningWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogWarningLINUX( console, error, list );
-#endif
-		va_end( list );
-	}
+    va_end( list );
 }
 
 CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... )
 {
-	if( console->parseType == CP_CONSOLE_PARSE_BRACE_STYLE )
-	{
+    /*
 		CPdword va_count = 0;
 		va_list list;
 
@@ -207,33 +179,21 @@ CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... )
 		{
 			if( error[i] == '%' ) va_count++;
 		}
-
-		va_start( list, va_count );
-		// Call OS specific code needed
+    */
+    va_list list;
+    va_start( list, error );
+    // Call OS specific code needed
 #ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogErrorWIN32( console, error, list );
+    cp__ConsoleLogErrorWIN32( console, error, list );
 #elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogErrorLINUX( console, error, list );
+    cp__ConsoleLogErrorLINUX( console, error, list );
 #endif
-		va_end( list );
-	}
-	else
-	{
-		va_list list;
-		va_start( list, error );
-#ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogErrorWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogErrorLINUX( console, error, list );
-#endif
-		va_end( list );
-	}
+    va_end( list );
 }
 
 CP_API void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
 {
-	if( console->parseType == CP_CONSOLE_PARSE_BRACE_STYLE )
-	{
+    /*
 		CPdword va_count = 0;
 		va_list list;
 
@@ -243,27 +203,16 @@ CP_API void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
 		{
 			if( error[i] == '%' ) va_count++;
 		}
-
-		va_start( list, va_count );
-		// Call OS specific code needed
+    */
+    va_list list;
+    va_start( list, error );
+    // Call OS specific code needed
 #ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogFatalWIN32( console, error, list );
+    cp__ConsoleLogFatalWIN32( console, error, list );
 #elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogFatalLINUX( console, error, list );
+    cp__ConsoleLogFatalLINUX( console, error, list );
 #endif
-		va_end( list );
-	}
-	else
-	{
-		va_list list;
-		va_start( list, error );
-#ifdef CP_PLATFORM_WINDOWS
-		cp__ConsoleLogFatalWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
-		cp__ConsoleLogFatalLINUX( console, error, list );
-#endif
-		va_end( list );
-	}
+    va_end( list );
 }
 
 CPpstring cp__ParseError( const char *error, va_list list )
@@ -311,21 +260,21 @@ CPpstring cp__ParseError( const char *error, va_list list )
 					}
 					else if( nc == 'u' ) {
 						lastTag++;
-						CPbyte val = va_arg( list, CPbyte );
+						CPbyte val = (CPbyte)va_arg( list, int );
 						CPpstring str = cpByteToString( val );
 						cpStrAppend( tmp_string, str->str );
 						cpDeleteString( str );
 					}
 					else if( nc == 'i' || nc == 'd' ) {
 						lastTag++;
-						char val = va_arg( list, char );
+						char val = (char)va_arg( list, int );
 						CPpstring str = cpSignedByteToString( val );
 						cpStrAppend( tmp_string, str->str );
 						cpDeleteString( str );
 					}
 				}
 				else {
-					char val = va_arg( list, char );
+					char val = (char)va_arg( list, int );
 					char str[2]={ val, '\0' };
 					cpStrAppend( tmp_string, str );
 				}
@@ -350,14 +299,14 @@ CPpstring cp__ParseError( const char *error, va_list list )
 					char nc = cpStrGetChar( serror, i+1 );
 					if( nc == 'u' ) {
 						lastTag++;
-						CPword val = va_arg( list, CPword );
+						CPword val = (CPword)va_arg( list, int );
 						CPpstring str = cpWordToString( val );
 						cpStrAppend( tmp_string, str->str );
 						cpDeleteString( str );
 					}
 					else if( nc == 'i' || nc == 'd' ) {
 						lastTag++;
-						short val = va_arg( list, short );
+						short val = (short)va_arg( list, int );
 						CPpstring str = cpShortToString( val );
 						cpStrAppend( tmp_string, str->str );
 						cpDeleteString( str );
@@ -596,4 +545,186 @@ CPpstring cp__ParseError( const char *error, va_list list )
 	}
 	cpDeleteString( serror );
 	return string;
+}
+
+
+void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* errorType )
+{
+	CPsize lastTag = 0;
+	CPbool TagType = CP_FALSE;
+	CPpstring print = cpCreateString( "" );
+
+	// initialize time variables
+	time_t time_raw_format;
+	struct tm ptime;
+	char buffer[50];
+
+    struct timespec spec;
+
+    clock_gettime( CLOCK_REALTIME, &spec );
+
+	time( &time_raw_format );
+	LOCALTIME( &ptime, &time_raw_format );
+
+	for( CPsize i = 0; i < console->consoleTag->length; ++i ) {
+		if( !TagType && cpStrGetChar( console->consoleTag, i ) == '%' ) {
+			TagType = CP_TRUE;
+
+			if( lastTag == 0 ) {
+				cpDeleteString( print );
+				print = cpStrSubStr( console->consoleTag, 0, i );
+			}
+			else {
+				CPpstring substr = cpStrSubStr( console->consoleTag, lastTag, i - lastTag );
+				cpStrAppend( print, substr->str );
+				cpDeleteString( substr );
+			}
+			lastTag = i;
+		}
+		else if( TagType == CP_TRUE ) {
+			switch( cpStrGetChar( console->consoleTag, i ) ) {
+			case 'm':
+				// month 1-12 ex: 3		
+				strftime( buffer, 50, "%m", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'd':
+				// day of month 1-31 ex: 27
+				strftime( buffer, 50, "%d", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'y':
+				// year 2 digits 00-99 ex: 19
+				strftime( buffer, 50, "%y", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'Y':
+				// year 4 digits 0000-9999 ex: 2019
+				strftime( buffer, 50, "%Y", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'D':
+				// date MM/DD/YY ex: 03/27/19
+				strftime( buffer, 50, "%m/%d/%y", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'H':
+				// hour 24 format ex: 14
+				strftime( buffer, 50, "%H", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'h':
+				// hour 12 format ex: 9
+				strftime( buffer, 50, "%I", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'M':
+				// Minutes 0-59 ex: 08
+				strftime( buffer, 50, "%M", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'S':
+				// Seconds 0-59 ex: 32
+				strftime( buffer, 50, "%S", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'w':
+				// abbreviated weekday name ex: Wed
+				strftime( buffer, 50, "%w", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'W':
+				// full weekday name ex: Wednesday
+				strftime( buffer, 50, "%W", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'i':
+				// Millisecond of current second 0-999 ex: 385
+			{
+				CPpstring str = cpDWordToString( spec.tv_nsec / 1000000 );
+				cpStrAppend( print, str->str );
+				cpDeleteString( str );
+				break;
+			}
+            case 'I':
+                // Nanosecond of current second 0-999999 ex: 19999
+            {
+                CPpstring str = cpQWordToString( spec.tv_nsec );
+                cpStrAppend( print, str->str );
+                cpDeleteString( str );
+                break;
+            }
+			case 'a':
+				// AM/PM of time ex: AM
+				strftime( buffer, 50, "%p", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'c':
+				// full 12 hour clock HH:MM AM/PM ex: 9:14 PM
+				strftime( buffer, 50, "%I:%M %p", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'C':
+				// full 24 hour clock HH:MM ex 21:14
+				strftime( buffer, 50, "%H:%M", &ptime );
+				cpStrAppend( print, buffer );
+				break;
+			case 'n':
+				// logger name
+				cpStrAppend( print, console->consoleName->str );
+				break;
+			case 'Z':
+				// default logger given
+				strftime( buffer, 50, "[%H:%M:%S:", &ptime );
+				cpStrAppend( print, buffer );
+                CPpstring str = cpDWordToString( spec.tv_nsec / 1000000 );
+                cpStrAppend( print, str->str );
+                cpStrAppend( print, "]-" );
+				cpStrAppend( print, errorType );
+				cpStrAppend( print, ":" );
+				cpStrAppend( print, console->consoleName->str );
+				cpStrAppend( print, ": " );
+				cpStrAppend( print, error );
+                cpDeleteString( str );
+				break;
+			case 'z':
+				// default internal logger
+			{
+				strftime( buffer, 50, "[%H:%M:%S:", &ptime );
+				cpStrAppend( print, buffer );
+				CPpstring mstr = cpDWordToString( spec.tv_nsec / 1000000 );
+				cpStrAppend( print, mstr->str );
+				cpStrAppend( print, ":" );
+                CPpstring nstr = cpQWordToString( spec.tv_nsec );
+                cpStrAppend( print, nstr->str );
+                cpStrAppend( print, "]-" );
+				cpStrAppend( print, errorType );
+				cpStrAppend( print, ":" );
+				cpStrAppend( print, console->consoleName->str );
+				cpStrAppend( print, ": " );
+				cpStrAppend( print, error );
+				cpDeleteString( mstr );
+                cpDeleteString( nstr );
+				break;
+			}
+			case 'e':
+				// Error type
+				cpStrAppend( print, errorType );
+				break;
+			case 'l':
+				// actual log
+				cpStrAppend( print, error );
+				break;
+			case '%':
+				// print out % sign
+				cpStrAppend( print, "%" );
+				break;
+			}
+
+			TagType = CP_FALSE;
+		}
+	}
+
+	puts( print->str );
+	cpDeleteString( print );
 }

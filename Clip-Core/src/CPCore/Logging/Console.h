@@ -2,8 +2,8 @@
 #define CP_CONSOLE_H_
 
 #include <stdio.h>
-#include "Clip/Core/Misc/Color.h"
-#include "Clip/Core/Misc/String.h"
+#include "CPCore/Misc/Color.h"
+#include "CPCore/Misc/String.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +56,14 @@ CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... );
 CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... );
 CP_API void cpConsoleLogFatal( CPpconsole console, const char* error, ... );
 
+CP_API void cp__ConsoleLogTrace(CPpconsole console, const char* error, CPsize tags, ... );
+CP_API void cp__ConsoleLogInfo( CPpconsole console, const char* error, CPsize tags, ... );
+CP_API void cp__ConsoleLogWarning( CPpconsole console, const char* error, CPsize tags, ... );
+CP_API void cp__ConsoleLogError( CPpconsole console, const char* error, CPsize tags, ... );
+CP_API void cp__ConsoleLogFatal( CPpconsole console, const char* error, CPsize tags, ... );
+
 CPpstring cp__ParseError( const char* error, va_list list );
+void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* errorType );
 
 #ifdef CP_DIST
 #	define CP_CORE_LOG_FATAL( ... )

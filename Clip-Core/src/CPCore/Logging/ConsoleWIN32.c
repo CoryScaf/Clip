@@ -11,7 +11,7 @@
 
 
 #ifndef CP_DIST
-
+/*
 void cpParseAndPrintTag( CPpconsole console, const char* error, const char* errorType )
 {
 	CPsize lastTag = 0;
@@ -176,7 +176,7 @@ void cpParseAndPrintTag( CPpconsole console, const char* error, const char* erro
 	puts( print->str );
 	cpDeleteString( print );
 }
-
+*/
 CP_API void cp__InitConsoleAppsWIN32()
 {
 	if( GetConsoleWindow() == NULL )
@@ -217,13 +217,14 @@ CP_API void cp__InitConsoleAppsWIN32()
 
 CP_API void cp__UninitConsoleAppsWIN32()
 {
+    // Currently no use for UninitConsoleAppsWIN32
 }
 
 CP_API void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list )
 {
 	// Trace uses standard color
 	CPpstring serror = cp__ParseError( error, list );
-	cpParseAndPrintTag( console, serror->str, "Trace" );
+	cp__ParseAndPrintTag( console, serror->str, "Trace" );
 	cpDeleteString( serror );
 }
 
@@ -239,7 +240,7 @@ CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_l
 	SetConsoleTextAttribute( hConsole, 10 ); // green
 
 	CPpstring serror = cp__ParseError( error, list );
-	cpParseAndPrintTag( console, serror->str, "Info" );
+	cp__ParseAndPrintTag( console, serror->str, "Info" );
 	cpDeleteString( serror );
 
 	SetConsoleTextAttribute( hConsole, savedAttribs );
@@ -257,7 +258,7 @@ CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, v
 	SetConsoleTextAttribute( hConsole, 14 ); // yellow
 
 	CPpstring serror = cp__ParseError( error, list );
-	cpParseAndPrintTag( console, serror->str, "Warning" );
+	cp__ParseAndPrintTag( console, serror->str, "Warning" );
 	cpDeleteString( serror );
 
 	SetConsoleTextAttribute( hConsole, savedAttribs );
@@ -275,7 +276,7 @@ CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_
 	SetConsoleTextAttribute( hConsole, 13 ); // pink
 
 	CPpstring serror = cp__ParseError( error, list );
-	cpParseAndPrintTag( console, serror->str, "Error" );
+	cp__ParseAndPrintTag( console, serror->str, "Error" );
 	cpDeleteString( serror );
 
 	SetConsoleTextAttribute( hConsole, savedAttribs );
@@ -293,7 +294,7 @@ CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_
 	SetConsoleTextAttribute( hConsole, 12 ); // red
 
 	CPpstring serror = cp__ParseError( error, list );
-	cpParseAndPrintTag( console, serror->str, "Fatal" );
+	cp__ParseAndPrintTag( console, serror->str, "Fatal" );
 	cpDeleteString( serror );
 
 	SetConsoleTextAttribute( hConsole, savedAttribs );

@@ -35,6 +35,8 @@
 #	else
 #		define CP_API __declspec( dllimport )
 #	endif
+#else
+#	define CP_API
 #endif
 
 #if !defined( CP_API_OPENGL ) && !defined( CP_API_VULKAN ) && !defined( CP_API_DIRECTX )

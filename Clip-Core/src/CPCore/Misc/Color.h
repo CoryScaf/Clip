@@ -1,7 +1,7 @@
 #ifndef CP_COLOR_H_
 #define CP_COLOR_H_
 
-#include "Clip/Core/Core.h"
+#include "CPCore/Core.h"
 
 #ifdef __cplusplus
 extern "C" {

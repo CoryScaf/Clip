@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include "Clip/Core/Logging/Console.h"
+#include "CPCore/Logging/Console.h"
 #include <time.h>
 
 CPpstring    cpIntToString( int x )

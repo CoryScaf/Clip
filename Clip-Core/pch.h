@@ -1,7 +1,7 @@
 #ifndef CP_PRECOMPILED_HEADER_
 #define CP_PRECOMPILED_HEADER_
 
-#include "src/Clip/Core/Core.h"
+#include "src/CPCore/Core.h"
 
 #ifdef CP_PLATFORM_WINDOWS
 
@@ -52,8 +52,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Clip/Core/Misc/Color.h"
-#include "Clip/Core/Misc/String.h"
-#include "Clip/Core/Misc/MiscFunctions.h"
+#include "src/CPCore/Misc/Color.h"
+#include "src/CPCore/Misc/String.h"
+#include "src/CPCore/Misc/MiscFunctions.h"
 
 #endif

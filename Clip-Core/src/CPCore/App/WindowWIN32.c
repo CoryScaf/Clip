@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Window.h"
 
-#include "Clip/Core/Logging/Console.h"
-#include "Clip/Core/Events/Event.h"
-#include "Clip/Core/Events/EventFunctions.h"
+#include "CPCore/Logging/Console.h"
+#include "CPCore/Events/Event.h"
+#include "CPCore/Events/EventFunctions.h"
 
 #ifdef CP_API_VULKAN
 #include <vulkan/vulkan.h>

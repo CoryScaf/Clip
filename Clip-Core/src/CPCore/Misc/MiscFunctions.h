@@ -2,7 +2,7 @@
 #define CP_MISCFUNCTIONS_H_
 
 #include "String.h"
-#include "Clip/Core/Core.h"
+#include "CPCore/Core.h"
 
 #ifdef __cplusplus
 extern "C" {

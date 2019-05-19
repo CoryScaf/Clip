@@ -1,7 +1,5 @@
 #define NOMINMAX
 #include "Clip.hpp"
-#include "Clip/Core/Misc/String.h"
-#include "Clip/Core/Misc/MiscFunctions.h"
 #include <iostream>
 #include <limits>
 int main()

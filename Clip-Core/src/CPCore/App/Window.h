@@ -27,9 +27,8 @@ CP_API void cpPollEvents();
 
 #elif defined( CP_PLATFORM_LINUX )
 
-#include <X11/Xlib>
 
-typedef class tagCPwindow
+typedef struct tagCPwindow
 {
 
 } CPwindow;
