@@ -1,8 +1,6 @@
 #ifndef CP_KEYCODES_H_
 #define CP_KEYCODES_H_
 
-#include "Clip/Core/Core.h"
-
 #ifdef CP_PLATFORM_WINDOWS
 #include <Windows.h>
 #define CP_MSE_LBUTTON				0x02

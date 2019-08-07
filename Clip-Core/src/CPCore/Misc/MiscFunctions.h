@@ -8,29 +8,29 @@
 extern "C" {
 #endif
 
-CP_API CPpstring cpIntToString( int x );
-CP_API CPpstring cpDWordToString( CPdword x );
-CP_API CPpstring cpWordToString( CPword x );
-CP_API CPpstring cpByteToString( CPbyte x );
-CP_API CPpstring cpQWordToString( CPqword x );
-CP_API CPpstring cpDoubleToString( double x, CPsize precision );
-CP_API CPpstring cpFloatToString( float x, CPsize precision );
-CP_API CPpstring cpLongDoubleToString( long double x, CPsize precision );
-CP_API CPpstring cpSignedByteToString( char x );
-CP_API CPpstring cpShortToString( short x );
-CP_API CPpstring cpLongLongToString( long long x );
+CPpstring cpIntToString( int x );
+CPpstring cpDWordToString( CPdword x );
+CPpstring cpWordToString( CPword x );
+CPpstring cpByteToString( CPbyte x );
+CPpstring cpQWordToString( CPqword x );
+CPpstring cpDoubleToString( double x, CPsize precision );
+CPpstring cpFloatToString( float x, CPsize precision );
+CPpstring cpLongDoubleToString( long double x, CPsize precision );
+CPpstring cpSignedByteToString( char x );
+CPpstring cpShortToString( short x );
+CPpstring cpLongLongToString( long long x );
 
-CP_API int			cpStringToInt( CPpstring str );
-CP_API CPdword		cpStringToDWord( CPpstring str );
-CP_API CPword		cpStringToWord( CPpstring str );
-CP_API CPbyte		cpStringToByte( CPpstring str );
-CP_API CPqword		cpStringToQWord( CPpstring str );
-CP_API double		cpStringToDouble( CPpstring str );
-CP_API float		cpStringToFloat( CPpstring str );
-CP_API long double  cpStringToLongDouble( CPpstring str );
-CP_API char         cpStringToSignedByte( CPpstring str );
-CP_API short        cpStringToShort( CPpstring str );
-CP_API long long    cpStringToLongLong( CPpstring str );
+int			cpStringToInt( CPpstring str );
+CPdword		cpStringToDWord( CPpstring str );
+CPword		cpStringToWord( CPpstring str );
+CPbyte		cpStringToByte( CPpstring str );
+CPqword		cpStringToQWord( CPpstring str );
+double		cpStringToDouble( CPpstring str );
+float		cpStringToFloat( CPpstring str );
+long double  cpStringToLongDouble( CPpstring str );
+char         cpStringToSignedByte( CPpstring str );
+short        cpStringToShort( CPpstring str );
+long long    cpStringToLongLong( CPpstring str );
 
 #ifdef __cplusplus
 }

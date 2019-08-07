@@ -10,16 +10,16 @@
 extern "C" {
 #endif
 
-typedef struct CP_API tagCPwindowWINAPI
+typedef struct  tagCPwindowWINAPI
 {
 	HWND  hWnd;
 	HINSTANCE hInstance;
 } CPwindow, CPwindowWINAPI;
 
-CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int m_width, unsigned int m_height );
-CP_API void cpFreeWindow( CPwindow* window );
+ CPwindow* cpCreateWindow( const wchar_t* title, unsigned int m_width, unsigned int m_height );
+ void cpFreeWindow( CPwindow* window );
 
-CP_API void cpPollEvents();
+ void cpPollEvents();
 
 #ifdef __cplusplus
 }

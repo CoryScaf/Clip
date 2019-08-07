@@ -40,7 +40,7 @@ typedef enum tagCPeventcategory
 	CP_EVENT_CAT_INPUT			= CP_BIT( 3 )
 } CPeventcategory;
 
-typedef struct CP_API tagCPevent
+typedef struct tagCPevent
 {
 	CPeventtype type;
 	CPbyte catigory;

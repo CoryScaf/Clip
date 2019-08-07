@@ -14,14 +14,14 @@ typedef struct tagCPstring
 } CPstring, *CPpstring;
 
 
-CP_API CPpstring cpCreateString( const char* str );
-CP_API void cpDeleteString( CPpstring str );
-CP_API char cpStrGetChar( CPpstring str, CPsize loc );
-CP_API CPsize cpStrFind( CPpstring str, const char* find );
-CP_API void cpStrAppend( CPpstring str, const char* cstr );
-CP_API void cpStrReplace( CPpstring str, const char* find, const char* replace );
-CP_API void cpStrInsert( CPpstring str, const char* ins, CPsize loc );
-CP_API CPpstring cpStrSubStr( CPpstring str, CPsize loc, CPsize count );
+CPpstring cpCreateString( const char* str );
+void cpDeleteString( CPpstring str );
+char cpStrGetChar( CPpstring str, CPsize loc );
+CPsize cpStrFind( CPpstring str, const char* find );
+void cpStrAppend( CPpstring str, const char* cstr );
+void cpStrReplace( CPpstring str, const char* find, const char* replace );
+void cpStrInsert( CPpstring str, const char* ins, CPsize loc );
+CPpstring cpStrSubStr( CPpstring str, CPsize loc, CPsize count );
 
 #ifdef __cplusplus
 }

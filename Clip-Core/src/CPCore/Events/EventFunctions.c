@@ -6,20 +6,20 @@
 
 CPevent* lastEvent = CP_NULL;
 
-int CP_API cpGetXCoord( CPqword QWORD )
+int cpGetXCoord( CPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFFu;
 	QWORD >>= 4u;
 	return (int)QWORD;
 }
 
-int CP_API cpGetYCoord( CPqword QWORD )
+int cpGetYCoord( CPqword QWORD )
 {
 	QWORD &= 0xFFFFFFFF00000000u;
 	return (int)QWORD;
 }
 
-int CP_API cpGetScrollDelta( CPdword DWORD )
+int cpGetScrollDelta( CPdword DWORD )
 {
 	return (int)DWORD;
 }

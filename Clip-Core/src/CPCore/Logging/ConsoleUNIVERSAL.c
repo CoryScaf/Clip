@@ -8,15 +8,20 @@
 
 #ifdef CP_PLATFORM_LINUX
 #define LOCALTIME( a, b ) localtime_r( b, a )
+#define CPGETEXTIME() cp__GetExTimeLINUX()
 #elif defined( CP_PLATFORM_WINDOWS )
 #define LOCALTIME( a, b ) localtime_s( a, b )
+#define CPGETEXTIME() cp__GetExTimeWIN32()
 #else
 #define LOCALTIME( a, b )
+#define CPGETEXTIME()
 #endif
+
+CPpconsole CP_CORE_CONSOLE = CP_NULL;
 
 
 // Allocate the console to the heap
-CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType )
+CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType )
 {
 	// get lengths of strings ( add one for null character at the end )
 	CPsize tagSize = strlen( tag )+1;
@@ -57,7 +62,7 @@ CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsolep
 }
 
 // Free the console from the heap
-CP_API void cpDeleteConsole( CPpconsole console )
+void cpDeleteConsole( CPpconsole console )
 {
 	cpDeleteString( console->consoleName );
 	cpDeleteString( console->consoleTag );
@@ -65,9 +70,9 @@ CP_API void cpDeleteConsole( CPpconsole console )
 }
 
 // Initialize the console
-CP_API void cpInitConsoleApps()
+void cpInitConsoleApps()
 {
-	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "[%t:%e] %n: %l", CP_CONSOLE_PARSE_PRINTF_STYLE );
+	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "%z", CP_CONSOLE_PARSE_PRINTF_STYLE );
 	if( CP_CORE_CONSOLE == CP_NULL ) printf( "CP_CORE_CONSOLE is null" );
 #ifdef CP_PLATFORM_WINDOWS
 	cp__InitConsoleAppsWIN32();
@@ -77,7 +82,7 @@ CP_API void cpInitConsoleApps()
 }
 
 // Uninitialize the console
-CP_API void cpUninitConsoleApps()
+void cpUninitConsoleApps()
 {
 	cpDeleteConsole( CP_CORE_CONSOLE );
 #ifdef CP_PLATFORM_WINDOWS
@@ -88,7 +93,7 @@ CP_API void cpUninitConsoleApps()
 }
 
 // Log error to the console
-CP_API void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
+void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
 {
     /*
     CPdword va_count = 0;
@@ -119,7 +124,7 @@ CP_API void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
     va_end( list );
 }
 
-CP_API void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
+void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
 {
     /*
     CPdword va_count = 0;
@@ -143,7 +148,7 @@ CP_API void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
     va_end( list );
 }
 
-CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
+void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
 {
     /*
 		CPdword va_count = 0;
@@ -167,7 +172,7 @@ CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
     va_end( list );
 }
 
-CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... )
+void cpConsoleLogError( CPpconsole console, const char* error, ... )
 {
     /*
 		CPdword va_count = 0;
@@ -191,7 +196,7 @@ CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... )
     va_end( list );
 }
 
-CP_API void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
+void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
 {
     /*
 		CPdword va_count = 0;
@@ -559,10 +564,8 @@ void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* er
 	struct tm ptime;
 	char buffer[50];
 
-    struct timespec spec;
-
-    clock_gettime( CLOCK_REALTIME, &spec );
-
+	CP__GetExTime spec = CPGETEXTIME();
+	
 	time( &time_raw_format );
 	LOCALTIME( &ptime, &time_raw_format );
 
@@ -641,7 +644,15 @@ void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* er
 			case 'i':
 				// Millisecond of current second 0-999 ex: 385
 			{
-				CPpstring str = cpDWordToString( spec.tv_nsec / 1000000 );
+				CPpstring str = cpDWordToString( spec.millis );
+				cpStrAppend( print, str->str );
+				cpDeleteString( str );
+				break;
+			}
+			case 'J':
+				// Microsections of current second
+			{
+				CPpstring str = cpQWordToString( spec.micros );
 				cpStrAppend( print, str->str );
 				cpDeleteString( str );
 				break;
@@ -649,7 +660,7 @@ void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* er
             case 'I':
                 // Nanosecond of current second 0-999999 ex: 19999
             {
-                CPpstring str = cpQWordToString( spec.tv_nsec );
+                CPpstring str = cpQWordToString( spec.nanos );
                 cpStrAppend( print, str->str );
                 cpDeleteString( str );
                 break;
@@ -677,7 +688,7 @@ void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* er
 				// default logger given
 				strftime( buffer, 50, "[%H:%M:%S:", &ptime );
 				cpStrAppend( print, buffer );
-                CPpstring str = cpDWordToString( spec.tv_nsec / 1000000 );
+                CPpstring str = cpDWordToString( spec.millis );
                 cpStrAppend( print, str->str );
                 cpStrAppend( print, "]-" );
 				cpStrAppend( print, errorType );
@@ -692,18 +703,14 @@ void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* er
 			{
 				strftime( buffer, 50, "[%H:%M:%S:", &ptime );
 				cpStrAppend( print, buffer );
-				CPpstring mstr = cpDWordToString( spec.tv_nsec / 1000000 );
-				cpStrAppend( print, mstr->str );
-				cpStrAppend( print, ":" );
-                CPpstring nstr = cpQWordToString( spec.tv_nsec );
-                cpStrAppend( print, nstr->str );
+				CPpstring nstr = cpQWordToString( spec.nanos );
+				cpStrAppend( print, nstr->str );
                 cpStrAppend( print, "]-" );
 				cpStrAppend( print, errorType );
 				cpStrAppend( print, ":" );
 				cpStrAppend( print, console->consoleName->str );
 				cpStrAppend( print, ": " );
 				cpStrAppend( print, error );
-				cpDeleteString( mstr );
                 cpDeleteString( nstr );
 				break;
 			}

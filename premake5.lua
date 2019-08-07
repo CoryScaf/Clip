@@ -1,4 +1,6 @@
 workspace "ClipEngine"
+    architecture "x64"
+    startproject "Sandbox"
     configurations
     {
         "Debug",
@@ -49,7 +51,7 @@ project "Clip-Core"
         optimize "On"
 
 project "Clip"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
 
     targetdir( "bin/" .. outputdir .. "/%{prj.name}" )
@@ -57,6 +59,8 @@ project "Clip"
 
     pchheader "pch.hpp"
     pchsource "%{prj.name}/pch.cpp"
+
+    defines "CP_DLL"
 
     files
     {
@@ -88,8 +92,11 @@ project "Clip"
         defines "CP_DIST"
         optimize "On"
 
+    filter "system:windows"
+        defines "CP_BUILD_DLL"
+
 project "Sandbox"
-    kind "WindowedApp"
+    kind "ConsoleApp"
     language "C++"
 
     targetdir( "bin/" .. outputdir .. "/%{prj.name}" )

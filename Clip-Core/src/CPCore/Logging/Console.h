@@ -15,52 +15,56 @@ typedef enum tagCPconsoleparsetype
 	CP_CONSOLE_PARSE_BRACE_STYLE
 } CPconsoleparsetype;
 
-typedef struct CP_API tagCPconsole
+typedef struct tagCPconsole
 {
 	CPpstring consoleName;
 	CPpstring consoleTag;
 	CPconsoleparsetype parseType;
 } CPconsole, *CPpconsole;
 
-CPpconsole CP_CORE_CONSOLE;
+typedef struct tagCP__GetExTime
+{
+	CPdword millis;
+	CPqword micros;
+	CPqword nanos;
+} CP__GetExTime;
 
-CP_API void cpInitConsoleApps();
-CP_API void cpUninitConsoleApps();
+extern CPpconsole CP_CORE_CONSOLE;
 
-CP_API void cp__InitConsoleAppsWIN32();
-CP_API void cp__UninitConsoleAppsWIN32();
+void cpInitConsoleApps();
+void cpUninitConsoleApps();
 
-CP_API void cp__InitConsoleAppsLINUX();
-CP_API void cp__UninitConsoleAppsLINUX();
+void cp__InitConsoleAppsWIN32();
+void cp__UninitConsoleAppsWIN32();
+
+void cp__InitConsoleAppsLINUX();
+void cp__UninitConsoleAppsLINUX();
+
+CP__GetExTime cp__GetExTimeWIN32();
+CP__GetExTime cp__GetExTimeLINUX();
 
 // Allocate console to the heap UNIVERSAL
-CP_API CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType );
+CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType );
 // Free console from the heap UNIVERSAL
-CP_API void cpDeleteConsole( CPpconsole console );
+void cpDeleteConsole( CPpconsole console );
 
-CP_API void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list );
+void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list );
 
-CP_API void cp__ConsoleLogTraceLINUX( CPpconsole console, const char* error, va_list list );	// IMPLIMENT THESE
-CP_API void cp__ConsoleLogInfoLINUX( CPpconsole console, const char* error, va_list list );	
-CP_API void cp__ConsoleLogWarningLINUX( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogErrorLINUX( CPpconsole console, const char* error, va_list list );
-CP_API void cp__ConsoleLogFatalLINUX( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogTraceLINUX( CPpconsole console, const char* error, va_list list );	// IMPLIMENT THESE
+void cp__ConsoleLogInfoLINUX( CPpconsole console, const char* error, va_list list );	
+void cp__ConsoleLogWarningLINUX( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogErrorLINUX( CPpconsole console, const char* error, va_list list );
+void cp__ConsoleLogFatalLINUX( CPpconsole console, const char* error, va_list list );
 
-CP_API void cpConsoleLogTrace( CPpconsole console, const char* error, ... );
-CP_API void cpConsoleLogInfo( CPpconsole console, const char* error, ... );
-CP_API void cpConsoleLogWarning( CPpconsole console, const char* error, ... );
-CP_API void cpConsoleLogError( CPpconsole console, const char* error, ... );
-CP_API void cpConsoleLogFatal( CPpconsole console, const char* error, ... );
-
-CP_API void cp__ConsoleLogTrace(CPpconsole console, const char* error, CPsize tags, ... );
-CP_API void cp__ConsoleLogInfo( CPpconsole console, const char* error, CPsize tags, ... );
-CP_API void cp__ConsoleLogWarning( CPpconsole console, const char* error, CPsize tags, ... );
-CP_API void cp__ConsoleLogError( CPpconsole console, const char* error, CPsize tags, ... );
-CP_API void cp__ConsoleLogFatal( CPpconsole console, const char* error, CPsize tags, ... );
+void cpConsoleLogTrace( CPpconsole console, const char* error, ... );
+void cpConsoleLogInfo( CPpconsole console, const char* error, ... );
+void cpConsoleLogWarning( CPpconsole console, const char* error, ... );
+void cpConsoleLogError( CPpconsole console, const char* error, ... );
+void cpConsoleLogFatal( CPpconsole console, const char* error, ... );
 
 CPpstring cp__ParseError( const char* error, va_list list );
 void cp__ParseAndPrintTag( CPpconsole console, const char* error, const char* errorType );

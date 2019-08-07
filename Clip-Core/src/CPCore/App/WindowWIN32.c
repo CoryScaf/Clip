@@ -16,7 +16,7 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 CPbyte wcInstances = 0;
 
 
-CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
+CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
 {
 	// Create new CPwindow* and zero it out
 	CPwindow* window = malloc( sizeof( CPwindow ) );
@@ -88,7 +88,7 @@ CP_API CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsig
 	return window;
 }
 
-void CP_API cpFreeWindow( CPwindow* window )
+void cpFreeWindow( CPwindow* window )
 {
 	// destroy window and free CPwindow
 	DestroyWindow( window->hWnd );
@@ -102,7 +102,7 @@ void CP_API cpFreeWindow( CPwindow* window )
 	}
 }
 
-void CP_API cpPollEvents()
+void cpPollEvents()
 {
 	// Gather the different events that happen
 	MSG msg;

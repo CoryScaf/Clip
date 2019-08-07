@@ -10,6 +10,18 @@ CPpstring    cpIntToString( int x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in IntToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		int y = abs( x );
 		for( int i = 1; y / i > 0; i *= 10 ) str->length++;
@@ -43,6 +55,18 @@ CPpstring    cpDWordToString( CPdword x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in DWordToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		for( CPdword i = 1; x / i > 0; i *= 10 ) str->length++;
 		str->str = malloc( str->length + 1 );
@@ -63,6 +87,18 @@ CPpstring    cpWordToString( CPword x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in WordToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		for( CPword i = 1; x / i > 0; i *= 10 ) str->length++;
 		str->str = malloc( str->length + 1 );
@@ -83,6 +119,18 @@ CPpstring    cpByteToString( CPbyte x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in ByteToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		for( CPbyte i = 1; x / i > 0; i *= 10 ) str->length++;
 		str->str = malloc( str->length + 1 );
@@ -103,6 +151,18 @@ CPpstring    cpQWordToString( CPqword x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in QWordToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		for( CPqword i = 1; x / i > 0; i *= 10 ) str->length++;
 		str->str = malloc( str->length + 1 );
@@ -126,6 +186,20 @@ CPpstring    cpDoubleToString( double x, CPsize precision )
 	while( back > 0 && back % 10 == 0 ) back /= 10;
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0.0 ) {
+			str->length = 3;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '.';
+				str->str[2] = '0';
+				str->str[3] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in DoubleToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		int af = abs( front );
 		for( int i = 1; af / i > 0; i *= 10 ) str->length++;
@@ -192,6 +266,20 @@ CPpstring    cpFloatToString( float x, CPsize precision )
 	while( back > 0 && back % 10 == 0 ) back /= 10;
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0.0f ) {
+			str->length = 3;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '.';
+				str->str[2] = '0';
+				str->str[3] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in FloatToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		int af = abs( front );
 		for( int i = 1; af / i > 0; i *= 10 ) str->length++;
@@ -258,6 +346,20 @@ CPpstring    cpLongDoubleToString( long double x, CPsize precision )
 	while( back > 0 && back % 10 == 0 ) back /= 10;
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0.0 ) {
+			str->length = 3;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '.';
+				str->str[2] = '0';
+				str->str[3] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in LongDoubleToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		int af = abs( front );
 		for( int i = 1; af / i > 0; i *= 10 ) str->length++;
@@ -321,6 +423,18 @@ CPpstring    cpSignedByteToString( char x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in SignedByteToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		char y = (char)abs( (int)x );
 		for( char i = 1; y / i > 0; i *= 10 ) str->length++;
@@ -354,6 +468,18 @@ CPpstring    cpShortToString( short x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in ShortToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
 		short y = abs( x );
 		for( short i = 1; y / i > 0; i *= 10 ) str->length++;
@@ -387,8 +513,20 @@ CPpstring    cpLongLongToString( long long x )
 {
 	CPpstring str = malloc( sizeof( CPstring ) );
 	if( str ) {
+		if( x == 0 ) {
+			str->length = 1;
+			str->str = malloc( str->length+1 );
+			if( str->str ) {
+				str->str[0] = '0';
+				str->str[1] = '\0';
+				return str;
+			}
+			CP_CORE_LOG_WARNING( "CPstring->str malloc failed in LongLongToString." );
+			free( str );
+			return CP_NULL;
+		}
 		str->length = 0;
-		long long y = abs( x );
+		long long y = x < 0 ? x*-1 : x;
 		for( long long i = 1; y / i > 0; i *= 10 ) str->length++;
 		if( x != y ) {
 			str->length++;

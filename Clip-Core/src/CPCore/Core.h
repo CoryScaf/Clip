@@ -29,16 +29,6 @@
 #define CP_COMPILER_SOLARIS_STUDIO
 #endif
 
-#ifdef CP_PLATFORM_WINDOWS
-#	ifdef CP_BUILD_DLL
-#		define CP_API __declspec( dllexport )
-#	else
-#		define CP_API __declspec( dllimport )
-#	endif
-#else
-#	define CP_API
-#endif
-
 #if !defined( CP_API_OPENGL ) && !defined( CP_API_VULKAN ) && !defined( CP_API_DIRECTX )
 #	define CP_API_OPENGL
 #endif
@@ -52,7 +42,7 @@
 
 typedef unsigned char CPbyte;
 typedef unsigned short CPword;
-typedef unsigned int CPdword;
+typedef unsigned long int CPdword;
 typedef unsigned long long int CPqword;
 typedef CPqword CPsize;
 typedef CPbyte CPbool;
@@ -61,14 +51,14 @@ typedef CPbyte CPbool;
 extern "C" {
 #endif
 
-CPdword CP_API cpHighDWord( CPqword QWORD );
-CPdword CP_API cpLowDWord( CPqword QWORD );
+CPdword cpHighDWord( CPqword QWORD );
+CPdword cpLowDWord( CPqword QWORD );
 
-CPword CP_API cpHighWord( CPdword DWORD );
-CPword CP_API cpLowWord( CPdword DWORD );
+CPword cpHighWord( CPdword DWORD );
+CPword cpLowWord( CPdword DWORD );
 
-CPbyte CP_API cpHighByte( CPword WORD );
-CPbyte CP_API cpLowByte( CPword WORD );
+CPbyte cpHighByte( CPword WORD );
+CPbyte cpLowByte( CPword WORD );
 
 #ifdef __cplusplus
 }

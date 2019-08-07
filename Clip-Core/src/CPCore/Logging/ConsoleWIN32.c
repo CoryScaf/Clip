@@ -11,174 +11,9 @@
 
 
 #ifndef CP_DIST
-/*
-void cpParseAndPrintTag( CPpconsole console, const char* error, const char* errorType )
-{
-	CPsize lastTag = 0;
-	CPbool TagType = CP_FALSE;
-	CPpstring print = cpCreateString( "" );
 
-	// initialize time variables
-	time_t time_raw_format;
-	struct tm ptime;
-	char buffer[50];
-
-	SYSTEMTIME st;
-	GetSystemTime( &st );
-	
-
-	time( &time_raw_format );
-	localtime_s( &ptime, &time_raw_format );
-
-	for( CPsize i = 0; i < console->consoleTag->length; ++i ) {
-		if( !TagType && cpStrGetChar( console->consoleTag, i ) == '%' ) {
-			TagType = CP_TRUE;
-
-			if( lastTag == 0 ) {
-				cpDeleteString( print );
-				print = cpStrSubStr( console->consoleTag, 0, i );
-			}
-			else {
-				CPpstring substr = cpStrSubStr( console->consoleTag, lastTag, i - lastTag );
-				cpStrAppend( print, substr->str );
-				cpDeleteString( substr );
-			}
-			lastTag = i;
-		}
-		else if( TagType == CP_TRUE ) {
-			switch( cpStrGetChar( console->consoleTag, i ) ) {
-			case 'm':
-				// month 1-12 ex: 3		
-				strftime( buffer, 50, "%m", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'd':
-				// day of month 1-31 ex: 27
-				strftime( buffer, 50, "%d", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'y':
-				// year 2 digits 00-99 ex: 19
-				strftime( buffer, 50, "%y", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'Y':
-				// year 4 digits 0000-9999 ex: 2019
-				strftime( buffer, 50, "%Y", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'D':
-				// date MM/DD/YY ex: 03/27/19
-				strftime( buffer, 50, "%m/%d/%y", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'H':
-				// hour 24 format ex: 14
-				strftime( buffer, 50, "%H", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'h':
-				// hour 12 format ex: 9
-				strftime( buffer, 50, "%I", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'M':
-				// Minutes 0-59 ex: 08
-				strftime( buffer, 50, "%M", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'S':
-				// Seconds 0-59 ex: 32
-				strftime( buffer, 50, "%S", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'w':
-				// abbreviated weekday name ex: Wed
-				strftime( buffer, 50, "%w", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'W':
-				// full weekday name ex: Wednesday
-				strftime( buffer, 50, "%W", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'i':
-				// Millisecond of current second 0-999 ex: 385
-			{
-				CPpstring str = cpWordToString( st.wMilliseconds );
-				cpStrAppend( print, str->str );
-				cpDeleteString( str );
-				break;
-			}
-			case 'a':
-				// AM/PM of time ex: AM
-				strftime( buffer, 50, "%p", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'c':
-				// full 12 hour clock HH:MM AM/PM ex: 9:14 PM
-				strftime( buffer, 50, "%I:%M %p", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'C':
-				// full 24 hour clock HH:MM ex 21:14
-				strftime( buffer, 50, "%H:%M", &ptime );
-				cpStrAppend( print, buffer );
-				break;
-			case 'n':
-				// logger name
-				cpStrAppend( print, console->consoleName->str );
-				break;
-			case 'Z':
-				// default logger given
-				strftime( buffer, 50, "[%H:%M:%S]-", &ptime );
-				cpStrAppend( print, buffer );
-				cpStrAppend( print, errorType );
-				cpStrAppend( print, ":" );
-				cpStrAppend( print, console->consoleName->str );
-				cpStrAppend( print, ": " );
-				cpStrAppend( print, error );
-				break;
-			case 'z':
-				// default internal logger
-			{
-				strftime( buffer, 50, "[%H:%M:%S:", &ptime );
-				cpStrAppend( print, buffer );
-				CPpstring str = cpWordToString( st.wMilliseconds );
-				cpStrAppend( print, str->str );
-				cpStrAppend( print, "]-" );
-				cpStrAppend( print, errorType );
-				cpStrAppend( print, ":" );
-				cpStrAppend( print, console->consoleName->str );
-				cpStrAppend( print, ": " );
-				cpStrAppend( print, error );
-				cpDeleteString( str );
-				break;
-			}
-			case 'e':
-				// Error type
-				cpStrAppend( print, errorType );
-				break;
-			case 'l':
-				// actual log
-				cpStrAppend( print, error );
-				break;
-			case '%':
-				// print out % sign
-				cpStrAppend( print, "%" );
-				break;
-			}
-
-			TagType = CP_FALSE;
-		}
-	}
-
-	puts( print->str );
-	cpDeleteString( print );
-}
-*/
-CP_API void cp__InitConsoleAppsWIN32()
-{
+void cp__InitConsoleAppsWIN32()
+{ 
 	if( GetConsoleWindow() == NULL )
 	{
 		int hConHandle;
@@ -215,12 +50,12 @@ CP_API void cp__InitConsoleAppsWIN32()
 	}
 }
 
-CP_API void cp__UninitConsoleAppsWIN32()
+void cp__UninitConsoleAppsWIN32()
 {
     // Currently no use for UninitConsoleAppsWIN32
 }
 
-CP_API void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list )
 {
 	// Trace uses standard color
 	CPpstring serror = cp__ParseError( error, list );
@@ -228,7 +63,7 @@ CP_API void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_
 	cpDeleteString( serror );
 }
 
-CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list )
 {
 	HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
@@ -246,7 +81,7 @@ CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_l
 	SetConsoleTextAttribute( hConsole, savedAttribs );
 }
 
-CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list )
 {
 	HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
@@ -264,7 +99,7 @@ CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, v
 	SetConsoleTextAttribute( hConsole, savedAttribs );
 }
 
-CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list )
 {
 	HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
@@ -282,7 +117,7 @@ CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_
 	SetConsoleTextAttribute( hConsole, savedAttribs );
 }
 
-CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list )
 {
 	HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
 	CONSOLE_SCREEN_BUFFER_INFO conInfo;
@@ -300,46 +135,106 @@ CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_
 	SetConsoleTextAttribute( hConsole, savedAttribs );
 }
 #else
-CP_API void cp__InitConsoleAppsWIN32() {}
-CP_API void cp__UninitConsoleAppsWIN32() {}
+void cp__InitConsoleAppsWIN32() {}
+void cp__UninitConsoleAppsWIN32() {}
 
-CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list ) {}
+void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list ) {}
 
-CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list ) {}
+void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list ) {}
 
-CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list ) {}
+void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list ) {}
 
-CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list ) {}
+void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list ) {}
 #endif
+
+LARGE_INTEGER getFILETIMEoffset()
+{
+	SYSTEMTIME s;
+	FILETIME f;
+	LARGE_INTEGER t;
+
+	s.wYear = 1970;
+	s.wMonth = 1;
+	s.wDay = 1;
+	s.wHour = 0;
+	s.wMinute = 0;
+	s.wSecond = 0;
+	s.wMilliseconds = 0;
+	SystemTimeToFileTime( &s, &f );
+	t.QuadPart = f.dwHighDateTime;
+	t.QuadPart <<= 32;
+	t.QuadPart |= f.dwLowDateTime;
+	return t;
+}
+
+CP__GetExTime cp__GetExTimeWIN32() 
+{
+	LARGE_INTEGER t;
+	FILETIME f;
+	double microseconds;
+	static LARGE_INTEGER offset;
+	static double frequencyToMicroseconds;
+	static int initialized = 0;
+	static BOOL usePerformanceCounter = 0;
+
+	if( !initialized ) {
+		LARGE_INTEGER performanceFrequency;
+		initialized = 1;
+		usePerformanceCounter = QueryPerformanceFrequency( &performanceFrequency );
+		if( usePerformanceCounter ) {
+			QueryPerformanceCounter( &offset );
+			frequencyToMicroseconds = (double)performanceFrequency.QuadPart / 1000000.0;
+		}
+		else {
+			offset = getFILETIMEoffset();
+			frequencyToMicroseconds = 10.0;
+		}
+	}
+	if( usePerformanceCounter ) QueryPerformanceCounter( &t );
+	else {
+		GetSystemTimeAsFileTime( &f );
+		t.QuadPart = f.dwHighDateTime;
+		t.QuadPart <<= 32;
+		t.QuadPart |= f.dwLowDateTime;
+	}
+
+	t.QuadPart -= offset.QuadPart;
+	microseconds = (double)t.QuadPart / frequencyToMicroseconds;
+	CP__GetExTime get;
+	get.millis = (CPdword)( microseconds/100.0 );
+	get.nanos = (CPqword)( microseconds*1000.0 );
+	get.micros = (CPqword)microseconds;
+	return get;
+}
 
 #else
 
-CP_API void cp__InitConsoleAppsWIN32()
+void cp__InitConsoleAppsWIN32()
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
 }
 
-CP_API void cp__UninitConsoleAppsWIN32()
+void cp__UninitConsoleAppsWIN32()
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
 }
 
-CP_API void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list )
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
 }
 
-CP_API void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list )
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogWarning WIN32 on Linux or some other unsupported operating system" );
 }
 
-CP_API void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list )
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogError WIN32 on Linux or some other unsupported operating system" );
 }
 
-CP_API void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list )
+void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list )
 {
 	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogFatal WIN32 on Linux or some other unsupported operating system" );
 }
