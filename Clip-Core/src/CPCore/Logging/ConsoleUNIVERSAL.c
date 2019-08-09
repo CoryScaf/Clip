@@ -19,9 +19,8 @@
 
 CPpconsole CP_CORE_CONSOLE = CP_NULL;
 
-
 // Allocate the console to the heap
-CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType )
+CPpconsole cpCreateConsole( const char* name, const char* tag )
 {
 	// get lengths of strings ( add one for null character at the end )
 	CPsize tagSize = strlen( tag )+1;
@@ -57,7 +56,6 @@ CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetyp
 		return CP_NULL;
 	}
 
-	console->parseType = parseType;
 	return console;
 }
 
@@ -72,7 +70,7 @@ void cpDeleteConsole( CPpconsole console )
 // Initialize the console
 void cpInitConsoleApps()
 {
-	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "%z", CP_CONSOLE_PARSE_PRINTF_STYLE );
+	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "%z" );
 	if( CP_CORE_CONSOLE == CP_NULL ) printf( "CP_CORE_CONSOLE is null" );
 #ifdef CP_PLATFORM_WINDOWS
 	cp__InitConsoleAppsWIN32();
@@ -95,24 +93,6 @@ void cpUninitConsoleApps()
 // Log error to the console
 void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
 {
-    /*
-    CPdword va_count = 0;
-
-    // determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-    CPdword errLen = (CPdword)strlen( error );
-    for( CPdword i = 0; i < errLen; ++i )
-    {
-    if( error[i] == '%' ) {
-        if( i+1 < errLen ) {
-                char ip1 = error[i+1];
-                if( ip1 == 'c' || ip1 == 'i' || ip1 == 'd' || ip1 == 'f' || ip1 == 's' || ip1 == 'l' || ip1 == 'u' || ip1 == 'b'
-                    || ip1 == '-' || ip1 == '+' || ip1 == '.' || ( ip1 >= '0' && ip1 <= '9' ) ) {
-                    va_count++;
-                }
-            }
-        }
-    }
-    */
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
@@ -126,17 +106,6 @@ void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
 
 void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
 {
-    /*
-    CPdword va_count = 0;
-    va_list list;
-
-    // determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-    CPdword errLen = (CPdword)strlen( error );
-    for( CPdword i = 0; i < errLen; ++i )
-    {
-        if( error[i] == '%' ) va_count++;
-    }
-    */
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
@@ -150,17 +119,6 @@ void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
 
 void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
 {
-    /*
-		CPdword va_count = 0;
-		va_list list;
-
-		// determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-		CPdword errLen = (CPdword)strlen( error );
-		for( CPdword i = 0; i < errLen; ++i )
-		{
-			if( error[i] == '%' ) va_count++;
-		}
-    */
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
@@ -174,17 +132,6 @@ void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
 
 void cpConsoleLogError( CPpconsole console, const char* error, ... )
 {
-    /*
-		CPdword va_count = 0;
-		va_list list;
-
-		// determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-		CPdword errLen = (CPdword)strlen( error );
-		for( CPdword i = 0; i < errLen; ++i )
-		{
-			if( error[i] == '%' ) va_count++;
-		}
-    */
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
@@ -198,17 +145,6 @@ void cpConsoleLogError( CPpconsole console, const char* error, ... )
 
 void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
 {
-    /*
-		CPdword va_count = 0;
-		va_list list;
-
-		// determine argument count ( will cause errors if the amount of arguments given does not equil the amount of variables listed )
-		CPdword errLen = (CPdword)strlen( error );
-		for( CPdword i = 0; i < errLen; ++i )
-		{
-			if( error[i] == '%' ) va_count++;
-		}
-    */
     va_list list;
     va_start( list, error );
     // Call OS specific code needed

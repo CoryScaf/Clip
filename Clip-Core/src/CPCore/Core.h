@@ -11,6 +11,10 @@
 #define CP_PLATFORM_LINUX
 #endif
 
+#if defined( CP_PLATFORM_LINUX )
+
+#endif
+
 #if defined( __clang__ )
 #define CP_COMPILER_CLANG
 #elif defined( __ICC ) || defined( __INTEL_COMPILER )

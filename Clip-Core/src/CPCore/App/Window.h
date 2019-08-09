@@ -27,10 +27,9 @@ typedef struct  tagCPwindowWINAPI
 
 #elif defined( CP_PLATFORM_LINUX )
 
-
 typedef struct tagCPwindow
 {
-
+    
 } CPwindow;
 
 #endif

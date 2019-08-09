@@ -9,17 +9,10 @@
 extern "C" {
 #endif
 
-typedef enum tagCPconsoleparsetype
-{
-	CP_CONSOLE_PARSE_PRINTF_STYLE,
-	CP_CONSOLE_PARSE_BRACE_STYLE
-} CPconsoleparsetype;
-
 typedef struct tagCPconsole
 {
 	CPpstring consoleName;
 	CPpstring consoleTag;
-	CPconsoleparsetype parseType;
 } CPconsole, *CPpconsole;
 
 typedef struct tagCP__GetExTime
@@ -44,7 +37,7 @@ CP__GetExTime cp__GetExTimeWIN32();
 CP__GetExTime cp__GetExTimeLINUX();
 
 // Allocate console to the heap UNIVERSAL
-CPpconsole cpCreateConsole( const char* name, const char* tag, CPconsoleparsetype parseType );
+CPpconsole cpCreateConsole( const char* name, const char* tag );
 // Free console from the heap UNIVERSAL
 void cpDeleteConsole( CPpconsole console );
 

@@ -5,3 +5,6 @@ bin-int/
 *.vcxproj
 *.user
 *.filters
+*.sh
+Makefile
+*.make
