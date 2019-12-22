@@ -6,10 +6,10 @@
 #include <stdarg.h>
 #include <time.h>
 
-#ifdef CP_PLATFORM_LINUX
+#if CP_PLATFORM & CP_PLATFORM_LINUX
 #define LOCALTIME( a, b ) localtime_r( b, a )
 #define CPGETEXTIME() cp__GetExTimeLINUX()
-#elif defined( CP_PLATFORM_WINDOWS )
+#elif CP_PLATFORM & CP_PLATFORM_WINDOWS
 #define LOCALTIME( a, b ) localtime_s( a, b )
 #define CPGETEXTIME() cp__GetExTimeWIN32()
 #else
@@ -72,9 +72,9 @@ void cpInitConsoleApps()
 {
 	CP_CORE_CONSOLE = cpCreateConsole( "ENGINE", "%z" );
 	if( CP_CORE_CONSOLE == CP_NULL ) printf( "CP_CORE_CONSOLE is null" );
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
 	cp__InitConsoleAppsWIN32();
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
 	cp__InitConsoleAppsLINUX();
 #endif
 }
@@ -83,9 +83,9 @@ void cpInitConsoleApps()
 void cpUninitConsoleApps()
 {
 	cpDeleteConsole( CP_CORE_CONSOLE );
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
 	cp__UninitConsoleAppsWIN32();
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
 	cp__UninitConsoleAppsLINUX();
 #endif
 }
@@ -96,9 +96,9 @@ void cpConsoleLogTrace( CPpconsole console, const char* error, ... )
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
     cp__ConsoleLogTraceWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
     cp__ConsoleLogTraceLINUX( console, error, list );
 #endif
     va_end( list );
@@ -109,9 +109,9 @@ void cpConsoleLogInfo( CPpconsole console, const char* error, ... )
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
     cp__ConsoleLogInfoWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
     cp__ConsoleLogInfoLINUX( console, error, list );
 #endif
     va_end( list );
@@ -122,9 +122,9 @@ void cpConsoleLogWarning( CPpconsole console, const char* error, ... )
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
     cp__ConsoleLogWarningWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
     cp__ConsoleLogWarningLINUX( console, error, list );
 #endif
     va_end( list );
@@ -135,9 +135,9 @@ void cpConsoleLogError( CPpconsole console, const char* error, ... )
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
     cp__ConsoleLogErrorWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
     cp__ConsoleLogErrorLINUX( console, error, list );
 #endif
     va_end( list );
@@ -148,9 +148,9 @@ void cpConsoleLogFatal( CPpconsole console, const char* error, ... )
     va_list list;
     va_start( list, error );
     // Call OS specific code needed
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
     cp__ConsoleLogFatalWIN32( console, error, list );
-#elif defined( CP_PLATFORM_LINUX )
+#elif CP_PLATFORM & CP_PLATFORM_LINUX
     cp__ConsoleLogFatalLINUX( console, error, list );
 #endif
     va_end( list );

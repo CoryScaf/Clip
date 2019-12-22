@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Core.h"
+#include "Logging/Console.h"
+#include <stdlib.h>
 
 CPdword cpHighDWord( CPqword QWORD )
 {
@@ -39,3 +41,4 @@ CPbyte cpLowByte( CPword WORD )
 	WORD &= 0xFF00u;
 	return (CPbyte)WORD;
 }
+

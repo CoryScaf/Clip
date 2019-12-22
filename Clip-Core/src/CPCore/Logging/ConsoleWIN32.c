@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Console.h"
 
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
 #include <Windows.h>
 #include <stdio.h>
 #include <io.h>
@@ -211,32 +211,36 @@ CP__GetExTime cp__GetExTimeWIN32()
 
 void cp__InitConsoleAppsWIN32()
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
 }
 
 void cp__UninitConsoleAppsWIN32()
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
+}
+
+void cp__ConsoleLogTraceWIN32( CPpconsole console, const char* error, va_list list ) {
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogTrace WIN32 on Linux or some other unsupported operating system" );
 }
 
 void cp__ConsoleLogInfoWIN32( CPpconsole console, const char* error, va_list list )
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attepmt to use ConsoleLogInfo WIN32 on Linux or some other unsupported operating system" );
 }
 
 void cp__ConsoleLogWarningWIN32( CPpconsole console, const char* error, va_list list )
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogWarning WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogWarning WIN32 on Linux or some other unsupported operating system" );
 }
 
 void cp__ConsoleLogErrorWIN32( CPpconsole console, const char* error, va_list list )
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogError WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogError WIN32 on Linux or some other unsupported operating system" );
 }
 
 void cp__ConsoleLogFatalWIN32( CPpconsole console, const char* error, va_list list )
 {
-	CP_CORE_LOG_WARNING( "Attept to use ConsoleLogFatal WIN32 on Linux or some other unsupported operating system" );
+	CP_CORE_LOG_WARNING( "Attempt to use ConsoleLogFatal WIN32 on Linux or some other unsupported operating system" );
 }
 
 #endif

@@ -6,11 +6,11 @@
 #include "CPCore/Events/EventFunctions.h"
 
 #ifdef CP_API_VULKAN
-#include <vulkan/vulkan.h>
+//#include <vulkan/vulkan.h>
 #endif
 
 #ifdef CP_PLATFORM_WINDOWS
-
+/*
 LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 CPbyte wcInstances = 0;
@@ -300,5 +300,5 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
-
+*/
 #endif

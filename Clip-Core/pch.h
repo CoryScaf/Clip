@@ -3,10 +3,10 @@
 
 #include "src/CPCore/Core.h"
 
-#ifdef CP_PLATFORM_WINDOWS
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
 
 #define _WIN32_WINNT 0x0601
-#include <sdkddkver.h>
+//#include <sdkddkver.h>
 
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
@@ -45,7 +45,7 @@
 
 #define STRICT
 
-#include <Windows.h>
+//#include <Windows.h>
 #endif
 
 #include <string.h>
