@@ -5,10 +5,6 @@
 // App
 #include "CPCore/App/Window.h"
 
-// Events
-#include "CPCore/Events/Event.h"
-#include "CPCore/Events/EventFunctions.h"
-
 // Logging
 #include "CPCore/Logging/Console.h"
 

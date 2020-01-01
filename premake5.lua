@@ -37,6 +37,7 @@ project "Clip-Core"
 
     filter "system:linux"
         libdirs{ os.findlib( "X11" ) }
+        links{ "X11" }
 
     filter "configurations:Debug"
         defines "CP_DEBUG"
@@ -95,6 +96,10 @@ project "Clip"
     filter "system:windows"
         defines "CP_BUILD_DLL"
 
+    filter "system:linux"
+        libdirs{ os.findlib( "X11" ) }
+        links{ "X11" }
+
 project "Sandbox"
     kind "ConsoleApp"
     language "C++"
@@ -131,3 +136,7 @@ project "Sandbox"
     filter "configurations:Dist"
         defines "CP_DIST"
         optimize "On"
+        
+    filter "system:linux"
+        libdirs{ os.findlib( "X11" ) }
+        links{ "X11" }

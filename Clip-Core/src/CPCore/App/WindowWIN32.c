@@ -2,21 +2,18 @@
 #include "Window.h"
 
 #include "CPCore/Logging/Console.h"
-#include "CPCore/Events/Event.h"
-#include "CPCore/Events/EventFunctions.h"
 
-#ifdef CP_API_VULKAN
-//#include <vulkan/vulkan.h>
+#if CP_PLATFORM & CP_API_VULKAN
+#include <vulkan/vulkan.h>
 #endif
 
-#ifdef CP_PLATFORM_WINDOWS
-/*
+#if CP_PLATFORM & CP_PLATFORM_WINDOWS
 LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 CPbyte wcInstances = 0;
 
 
-CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
+CPpwindow cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height )
 {
 	// Create new CPwindow* and zero it out
 	CPwindow* window = malloc( sizeof( CPwindow ) );
@@ -88,7 +85,7 @@ CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int
 	return window;
 }
 
-void cpFreeWindow( CPwindow* window )
+void cpFreeWindow( CPpwindow window )
 {
 	// destroy window and free CPwindow
 	DestroyWindow( window->hWnd );
@@ -102,7 +99,7 @@ void cpFreeWindow( CPwindow* window )
 	}
 }
 
-void cpPollEvents()
+void cpPollEvents( void )
 {
 	// Gather the different events that happen
 	MSG msg;
@@ -300,5 +297,4 @@ LRESULT CALLBACK cpWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
-*/
 #endif

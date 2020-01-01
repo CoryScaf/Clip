@@ -2,14 +2,18 @@
 #include "Window.h"
 
 #include "CPCore/Logging/Console.h"
-#include "CPCore/Events/Event.h"
-#include "CPCore/Events/EventFunctions.h"
 
-#if defined( CP_PLATFORM_LINUX ) && defined( CP_PROTOCOL_WAYLAND )
-/*
-CPwindow* cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height ) 
+#if CP_PLATFORM & CP_PLATFORM_LINUX && CP_PLATFORM & CP_PROTOCOL_WAYLAND
+CPpwindow cpCreateWindow( const wchar_t* title, unsigned int width, unsigned int height ) 
 {
-   CP_CORE_LOG_INFO( "THIS IS A WAYLAND SESSION." );
+   CP_CORE_LOG_ERROR( "Wayland is currently not supported" );
+   return CP_NULL;
 }
-*/
+
+void cpFreeWindow( CPpwindow window ) {
+}
+
+void cpPollEvents() {
+}
+
 #endif
